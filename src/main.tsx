@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Routers } from './Routes'
@@ -9,13 +8,11 @@ import '@fontsource/roboto/700.css';
 import { Provider } from "react-redux";
 import { store } from './store';
 import { ErrorBoundaries } from './components/ErrorBoundaries';
-import { Bounce, Flip, ToastContainer } from 'react-toastify';
+import {Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { StyledEngineProvider } from '@mui/material/styles';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ErrorBoundaries>
-    {/* <StyledEngineProvider injectFirst> */}
       <Provider store={store}>
         <div className='mainWrapper'>
           <Routers />
@@ -34,6 +31,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           />
         </div>
       </Provider>
-    {/* </StyledEngineProvider> */}
   </ErrorBoundaries>,
 )

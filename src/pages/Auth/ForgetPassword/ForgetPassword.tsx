@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
-import { useAppSelector } from '../../../hooks/useRedux/useAppRedux';
 import { useNavigate } from 'react-router-dom';
 import ShareLogo from '../../../assets/shareLogo.png'
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import OtpInput from "react-otp-input";
 import { MuiOtpInput } from 'mui-one-time-password-input'
 
 

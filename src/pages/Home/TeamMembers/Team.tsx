@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../hooks/useRedux/useAppRedux'
-import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
+import { useAppDispatch} from '../../../hooks/useRedux/useAppRedux'
+import { Box, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Sheet from '@mui/joy/Sheet';
 import AccordionGroup from '@mui/joy/AccordionGroup';
 import Accordion from '@mui/joy/Accordion';
 import AccordionDetails from '@mui/joy/AccordionDetails';
@@ -12,14 +11,12 @@ import person from '../../../assets/person.png'
 import axios from 'axios';
 import { userDetails } from '../../../store/reducers/baseReducer';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 interface User {
   id: number;
   Name: string;
   Email: string;
   DateOfBirth: string;
-  // Add more fields as needed based on actual API response
 } 
 
 const Team: React.FC = () => {

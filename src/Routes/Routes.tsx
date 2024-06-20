@@ -5,7 +5,7 @@ import {
     Outlet,
 } from 'react-router-dom';
 import { ErrorBoundaries } from '../components/ErrorBoundaries';
-import { App } from '../pages/Home';
+import { Home } from '../pages/Home';
 import { Login } from '../pages/Auth/Login';
 import { Register } from '../pages/Auth/Register';
 import { ForgetPassword } from '../pages/Auth/ForgetPassword';
@@ -21,13 +21,11 @@ interface RouteConfig {
     children?: RouteConfig[];
 }
 
-// Router configuration
-
 const routerConfig: RouteConfig[] = [
     {
         path: 'home',
         element: (
-            <App />
+            <Home />
         ),
     },
     {

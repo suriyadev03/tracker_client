@@ -2,13 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../../hooks/useRedux/useAppRedux';
+import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
 import { Link, useNavigate } from 'react-router-dom';
 import ShareLogo from '../../../assets/shareLogo.png'
-import Paper from '@mui/material/Paper';
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { setAuthenticate , userDetails } from '../../../store/reducers/baseReducer';
+import { setAuthenticate  } from '../../../store/reducers/baseReducer';
 
 interface IFormInput {
     EmpId: string;
@@ -31,19 +30,16 @@ const Login: React.FC = () => {
                 if (res.data.status === "ok") {
                     toast.success(res.data.msg)
                     dispatch(setAuthenticate())
-                    // dispatch(userDetails(res.data.users))
                     navigate("/home")
                 }
                 if (res.data.status === "warning") {
                     toast.warning(res.data.msg);
-                    // toast.warning(res.data.msg)
                 }
             })
             .catch((err) => {
                 toast.warning(err.response.data.msg)
             })
     };
-    // console.log() // undefined
     return (
         <Box sx={{ minWidth: 300,maxWidth: 300, m: "auto", p: 2 }}>
             <div className='shareLogo'>

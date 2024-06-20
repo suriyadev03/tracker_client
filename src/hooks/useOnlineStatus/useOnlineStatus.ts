@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import { isServer } from '../../utils'
 
 
-const hasFocus = (): boolean => isServer || document.hasFocus()
+const hasFocus = (): boolean =>  document.hasFocus()
 
 const useOnlineStatus = (): boolean => {
   const [isOnline, setIsOnline] = useState(hasFocus)

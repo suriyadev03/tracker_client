@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react"
-import { useAppSelector } from "../../hooks/useRedux/useAppRedux"
-import { useNavigate } from "react-router-dom"
-import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ShareLogo from '../../assets/shareLogo.png'
 import teamLogo from '../../assets/teamLogo.png'
 import dailyTreatLogo from '../../assets/dailyTreatLogo.png'
@@ -10,6 +7,7 @@ import availableBalance from '../../assets/availableBalance.png'
 import calender from '../../assets/calender.webp'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Paper from '@mui/material/Paper';
+import { useNavigate } from 'react-router-dom';
 
 interface HomeMenu {
   name: string;
@@ -17,7 +15,7 @@ interface HomeMenu {
   logo: string;
 }
 
-const App = () => {
+const Home = () => {
   const HOME_MENUS: HomeMenu[] = [
     {
       name: "Team Members",
@@ -89,4 +87,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Home

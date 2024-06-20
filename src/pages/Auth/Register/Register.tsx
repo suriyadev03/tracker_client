@@ -5,11 +5,9 @@ import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
-import { userDetails } from '../../../store/reducers/baseReducer';
 import ShareLogo from '../../../assets/shareLogo.png'
 import { toast } from 'react-toastify';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 interface IFormInput {
@@ -22,7 +20,6 @@ interface IFormInput {
 }
 
 const Register: React.FC = () => {
-    const useDispatch = useAppDispatch()
     const navigate = useNavigate()
     const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
         defaultValues: {
