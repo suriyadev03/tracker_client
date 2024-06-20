@@ -1,0 +1,1 @@
+export { default as BirthDays } from './BirthDays'

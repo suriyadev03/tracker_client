@@ -1,0 +1,88 @@
+/* import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css'; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    src: url('./assets/font/AlegreyaSans-Bold.otf') format('opentype');
+    font-family: "AlegreyaSans-Bold";
+}
+@font-face {
+    src: url('./assets/font/AndikaNewBasic-R.ttf') format('truetype');
+    font-family: "AndikaNewBasic-R";
+}
+@font-face {
+    src: url('./assets/font/AndikaNewBasic-B.ttf') format('truetype');
+    font-family: "AndikaNewBasic-B";
+}
+body{
+    padding: 0;
+    margin: 0;
+    font-family: "AndikaNewBasic-B" !important;
+    height: 100vh !important;
+}
+.mainWrapper {
+    background-image: url(../src/assets/desk_bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.shareLogo>img{
+    width: 120px;
+}
+.shareLogo{
+    display: flex;
+    justify-content: center;
+}
+.MuiInputBase-formControl{
+    border-radius: 30px !important;
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
+}
+h6,h5,input,label{
+    font-family: "AndikaNewBasic-B" !important;
+}
+.MuiAccordionGroup-root::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.MuiAccordionGroup-root::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.MuiAccordionGroup-root::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+
+}
+.buttonContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.buttonContainer>button{
+    color: #000000;
+    background-color: orange;
+    border-radius: 20px;
+    font-size: 10px;
+    width: 30%;
+    font-family: "AndikaNewBasic-B" !important;
+}
+.buttonContainer>button:hover{
+    background-color: darkgoldenrod;
+}
+@media (max-width: 480px) {
+    .mainWrapper {
+        background-image: url(../src/assets/mobile_bg.png);
+    }
+}
