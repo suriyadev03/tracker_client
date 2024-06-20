@@ -50,11 +50,11 @@ const DailyTreat: React.FC = () => {
     return Members[index % Members.length];
   };
   return (
-    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "450px", m: 'auto', p: 2 }}>
+    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "550px",maxHeight: "550px", m: 'auto', p: 2 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-        <div onClick={() => navigate("/home")}><ArrowBackIcon /></div>
+      <div className='pulse-single' onClick={()=>navigate("/home")}><ArrowBackIcon/></div>
         <div className='shareLogo'>
-          <img src={ShareLogo} style={{ width: "80px" }} />
+          <img src={ShareLogo}/>
         </div>
         <Typography variant="h5" sx={{ textAlign: 'center', mb: 2 }}>Treat Tracker</Typography>
       </div>

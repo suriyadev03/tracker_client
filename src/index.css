@@ -17,7 +17,8 @@
 body{
     padding: 0;
     margin: 0;
-    font-family: "AndikaNewBasic-B" !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 400;
     height: 100vh !important;
 }
 .mainWrapper {
@@ -31,18 +32,25 @@ body{
     align-items: center;
 }
 .shareLogo>img{
-    width: 120px;
+    width: 60px;
 }
 .shareLogo{
     display: flex;
     justify-content: center;
+}
+.MuiButtonBase-root:hover{
+    box-shadow: 0px 0px 32px 9px rgba(0,0,0,0.1);
 }
 .MuiInputBase-formControl{
     border-radius: 30px !important;
     box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
 }
 h6,h5,input,label{
-    font-family: "AndikaNewBasic-B" !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 400;
+}
+.MuiTypography-root{
+    margin-bottom: 0px !important;
 }
 .MuiAccordionGroup-root::-webkit-scrollbar-track
 {
@@ -61,6 +69,12 @@ h6,h5,input,label{
 	background-color: #000000;
 
 }
+.MuiInputBase-root{
+    height: 40px !important;
+}
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+    margin-top: -10px !important;
+}
 .buttonContainer{
     display: flex;
     justify-content: space-between;
@@ -71,13 +85,90 @@ h6,h5,input,label{
     border-radius: 20px;
     font-size: 10px;
     width: 30%;
-    font-family: "AndikaNewBasic-B" !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 400;
 }
 .buttonContainer>button:hover{
     background-color: darkgoldenrod;
 }
+
+@keyframes pulse {
+    from {
+      box-shadow:  0 0 0 0 rgba(255,255,255,1),
+                   0 0 0 0 rgba(51,51,51,1);
+    }
+    to {
+      box-shadow:  0 0 0 0.65em rgba(255,255,255,1),
+                   0 0 0 1em rgba(51,51,51,0);
+    }
+  }
+  .pulse-single {
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline;
+    text-align: center;
+    height: 24px;
+  }
+  .pulse-single:active {
+    animation: pulse 0.2s 1 ease-out;
+  }
 @media (max-width: 480px) {
     .mainWrapper {
         background-image: url(../src/assets/mobile_bg.png);
     }
 }
+
+.btn-animate {
+    background-color: hsl(0, 2%, 16%);
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    transition: all 500ms ease;
+    margin-left: 5px;
+}
+.btn-animate:hover {
+    box-shadow: 0 0 20px #e89e00;
+}
+.text-animate:hover {
+    box-shadow: 0 0 10px #e89e00;
+    background-color: #e89f0065;
+}
+.text-animate{
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    transition: all 500ms ease;
+    margin-left: 5px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.pulse-single-square{
+    background: rgba( 255, 255, 255, 0.15 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 16px );
+-webkit-backdrop-filter: blur( 16px );
+border-radius: 25px;
+}
+.pulse-single-square>div{
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pulse-single-square>div>img{
+    border-radius: 25px;
+    width: 50%;
+}
+.pulse-single-square>div:hover{
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.28);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(9.8px);
+-webkit-backdrop-filter: blur(9.8px);
+border: 1px solid rgba(255, 255, 255, 0.31);
+}
+
+/* box-shadow: inset 0px 7px 87px -42px #e89e00; */

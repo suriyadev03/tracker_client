@@ -7,6 +7,8 @@ import ShareLogo from '../../../assets/shareLogo.png'
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { MuiOtpInput } from 'mui-one-time-password-input'
+import { startLoading } from '../../../store/reducers/baseReducer';
+import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
 
 
 interface IFormInput {
@@ -17,6 +19,7 @@ interface IFormInput {
 
 const ForgetPassword: React.FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
     defaultValues: {
       Email: '',
@@ -29,6 +32,7 @@ const ForgetPassword: React.FC = () => {
   const [updatePass, setUpdatePass] = useState<any>(false);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    dispatch(startLoading(true))
     if (updatePass) {
       axios.post(import.meta.env.VITE_SERVER_URL+"/updatepassword", { Email: data.Email, Password: data.Password })
         .then((res) => {
@@ -38,11 +42,15 @@ const ForgetPassword: React.FC = () => {
           }
         })
         .catch((err) => {
+          dispatch(startLoading(false))
           return toast.error(err.response.data.msg)
-        })
+        }).finally(()=>{
+          dispatch(startLoading(false))
+      })
     }
     if (!otpValid) {
       if (otp.length) {
+        dispatch(startLoading(false))
         return toast.error("OPT Expried Try Again")
       }
       axios.post(import.meta.env.VITE_SERVER_URL+"/forgetpassword", { Email: data.Email, otp: Math.floor(1000 + Math.random() * 9000) })
@@ -54,8 +62,11 @@ const ForgetPassword: React.FC = () => {
           }
         })
         .catch((err) => {
+          dispatch(startLoading(false))
           toast.error(err.response.data.msg)
-        })
+        }).finally(()=>{
+          dispatch(startLoading(false))
+      })
       setTimeout(() => {
         toast.error("OPT Expried Try Again")
         setOtpValid(false)
@@ -136,16 +147,16 @@ const ForgetPassword: React.FC = () => {
           />
         </FormControl>}
         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginTop: 20 }}>
-          <Typography variant="h6" sx={{ textAlign: 'center' }}>{updatePass ? "Update Password" : (otpValid ? "Submit OTP" : "Send OTP")}</Typography><Button type="submit" variant="contained" sx={{
-            color: "black", backgroundColor: 'orange', borderRadius: "20px", marginLeft: "5px",
-            '&:hover': {
-              backgroundColor: 'darkorange',
-            },
-          }}><ArrowForwardIcon /></Button>
+          <Typography variant="h6" sx={{ textAlign: 'center' }}>{updatePass ? "Update Password" : (otpValid ? "Submit OTP" : "Send OTP")}</Typography><div className='btn-animate'><Button type="submit" variant="contained" sx={{
+                        color: "black", backgroundColor: 'orange',borderRadius:"20px",
+                        '&:hover': {
+                            backgroundColor: 'darkorange',
+                        },
+                    }}><ArrowForwardIcon/></Button></div>
         </div>
 
       </form>
-      <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Are you remember your Password ? <span style={{textDecoration:"underline",cursor:"pointer"}} onClick={()=>navigate("/auth/login")}>Login</span></Typography>
+      <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Are you remember your Password ? <span className='text-animate' onClick={()=>navigate("/auth/login")}>Login</span></Typography>
     </Box>
   );
 };

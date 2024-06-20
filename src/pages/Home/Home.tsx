@@ -4,8 +4,8 @@ import teamLogo from '../../assets/teamLogo.png'
 import dailyTreatLogo from '../../assets/dailyTreatLogo.png'
 import birthdayLogo from '../../assets/birthdayLogo.webp'
 import availableBalance from '../../assets/availableBalance.png'
-import calender from '../../assets/calender.webp'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import profileLogo from '../../assets/user-profile.png'
+import calender from '../../assets/calender.png'
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,13 +54,14 @@ const Home = () => {
 
   return (
 
-    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "450px", m: 'auto', p: 2 }}>
+    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "550px", maxHeight: "550px", m: 'auto', p: 2 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-        <ArrowBackIcon />
+        
         <div className='shareLogo'>
-          <img src={ShareLogo} style={{ width: "80px" }} />
+          <img src={ShareLogo} style={{ width: "60px" }} />
         </div>
         <Typography variant="h5" sx={{ textAlign: 'center', mb: 2 }}>Treat Tracker</Typography>
+        <div className='pulse-single' style={{height:"30px"}}><img src={profileLogo} style={{ width: "30px" }} /></div>
       </div>
       <hr />
       <Box
@@ -77,9 +78,12 @@ const Home = () => {
       >
         {
           HOME_MENUS.map((data, index) => (
-            <Paper elevation={2} sx={{ textAlign: 'center' }} key={index}>
-              <img src={data.logo} style={{ height: "100%", width: "100%" }} onClick={() => navigate(`/${data.routeTo}`)}/>
+            <div className='pulse-single-square'   >
+            <Paper elevation={2} sx={{ textAlign: 'center' }} key={index} onClick={() => navigate(`/${data.routeTo}`)}>
+
+              <img src={data.logo}/>
             </Paper>
+            </div>
           ))
         }
       </Box>
@@ -88,3 +92,4 @@ const Home = () => {
 }
 
 export default Home
+// 

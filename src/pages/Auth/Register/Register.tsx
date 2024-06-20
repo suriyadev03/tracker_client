@@ -9,6 +9,8 @@ import ShareLogo from '../../../assets/shareLogo.png'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { startLoading } from '../../../store/reducers/baseReducer';
+import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
 
 interface IFormInput {
     Name: string;
@@ -21,6 +23,7 @@ interface IFormInput {
 
 const Register: React.FC = () => {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
         defaultValues: {
             Name: '',
@@ -38,13 +41,17 @@ const Register: React.FC = () => {
             Password: data.Password,
             DateOfBirth: data.DateOfBirth
         };
+        dispatch(startLoading(true))
         axios.post(import.meta.env.VITE_SERVER_URL+"/register", userData)
             .then((res) => {
                 navigate("/auth/login");
                 toast.success(res.data.msg);
             })
             .catch((err) => {
+                dispatch(startLoading(false))
                 toast.error(err);
+            }).finally(()=>{
+                dispatch(startLoading(false))
             })
     };
     return (
@@ -103,6 +110,7 @@ const Register: React.FC = () => {
                             <TextField
                                 {...field}
                                 id="Email"
+                                size="small"
                                 label="Email"
                                 error={!!errors.Email}
                                 helperText={errors.Email ? errors.Email.message : ''}
@@ -125,6 +133,7 @@ const Register: React.FC = () => {
                             <TextField
                                 {...field}
                                 id="Password"
+                                size="small"
                                 label="Password"
                                 type="password"
                                 error={!!errors.Password}
@@ -157,15 +166,15 @@ const Register: React.FC = () => {
                     </LocalizationProvider>
                 </FormControl>
                 <div style={{ display: "flex", justifyContent: "flex-end",alignItems:"center",marginTop:20 }}>
-                <Typography variant="h6" sx={{ textAlign: 'center' }}>Create</Typography><Button type="submit" variant="contained" sx={{
-                        color: "black", backgroundColor: 'orange',borderRadius:"20px",marginLeft:"5px",
+                <Typography variant="h6" sx={{ textAlign: 'center' }}>Create</Typography><div className='btn-animate'><Button type="submit" variant="contained" sx={{
+                        color: "black", backgroundColor: 'orange',borderRadius:"20px",
                         '&:hover': {
                             backgroundColor: 'darkorange',
                         },
-                    }}><ArrowForwardIcon/></Button>
+                    }}><ArrowForwardIcon/></Button></div>
                 </div>
             </form> 
-            <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Already have a accound ? <span style={{textDecoration:"underline",cursor:"pointer"}} onClick={()=>navigate("/auth/login")}>SignIn</span></Typography>
+            <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Already have a accound ? <span className='text-animate' onClick={()=>navigate("/auth/login")}>SignIn</span></Typography>
         </Box>
     );
 };

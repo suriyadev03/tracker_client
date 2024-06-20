@@ -10,11 +10,13 @@ import { store } from './store';
 import { ErrorBoundaries } from './components/ErrorBoundaries';
 import {Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoadingComponent } from './components/Loading';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ErrorBoundaries>
       <Provider store={store}>
         <div className='mainWrapper'>
+          <LoadingComponent />
           <Routers />
           <ToastContainer
             position="bottom-right"

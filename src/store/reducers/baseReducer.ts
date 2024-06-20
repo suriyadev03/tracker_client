@@ -23,8 +23,8 @@ const baseReducer = createSlice({
     setAuthenticate(state) {
       state.isAuthenticated = true
     },
-    startLoading(state) {
-      state.isLoading = true;
+    startLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
     },
     stopLoading(state) {
       state.isLoading = false;

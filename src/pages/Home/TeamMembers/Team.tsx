@@ -9,7 +9,7 @@ import AccordionSummary from '@mui/joy/AccordionSummary';
 import ShareLogo from '../../../assets/shareLogo.png'
 import person from '../../../assets/person.png'
 import axios from 'axios';
-import { userDetails } from '../../../store/reducers/baseReducer';
+import { startLoading, userDetails } from '../../../store/reducers/baseReducer';
 import { useNavigate } from 'react-router-dom';
 
 interface User {
@@ -22,37 +22,40 @@ interface User {
 const Team: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const [userList, setUserList] = useState<User[]>([]);
+  const [userList, setUserList] = useState<User[]>();
   
   useEffect(() => {
-    axios.post<{ status: string; users: User[] }>(import.meta.env.VITE_SERVER_URL+"/getUser", {})
-      .then((res) => {
-        if (res.data.status === "ok") {
-          dispatch(userDetails(res.data.users))
-          setUserList(res.data.users)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
+      dispatch(startLoading(true))
+      axios.post<{ status: string; users: User[] }>(import.meta.env.VITE_SERVER_URL+"/getUser", {})
+        .then((res) => {
+          if (res.data.status === "ok") {
+            dispatch(userDetails(res.data.users))
+            setUserList(res.data.users)
+          }
+        })
+        .catch((err) => {
+          dispatch(startLoading(false))
+          console.log(err)
+        }).finally(()=>{
+          dispatch(startLoading(false))
       })
   }, [])
-  console.log("userList",userList);
   
   return (
-    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "450px", m: 'auto', p: 2 }}>
+    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "550px",maxHeight: "550px", m: 'auto', p: 2 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-        <div onClick={()=>navigate("/home")}><ArrowBackIcon/></div>
+        <div className='pulse-single' onClick={()=>navigate("/home")}><ArrowBackIcon/></div>
         <div className='shareLogo'>
-          <img src={ShareLogo} style={{ width: "80px" }} />
+          <img src={ShareLogo}/>
         </div>
         <Typography variant="h5" sx={{ textAlign: 'center', mb: 2 }}>Treat Tracker</Typography>
       </div>
       <hr />
       <Typography variant="h6" sx={{ textAlign: 'center', mb: 2 }}>Team Members</Typography>
-      <AccordionGroup sx={{ maxWidth: 400 }}>
+      <AccordionGroup  sx={{ maxWidth: 400, maxHeight: "400px", overflow: "scroll", overflowX: "hidden" }}>
         {
-          userList?.map((data) => (
-            <Accordion key={data.id}>
+          userList?.map((data,index) => (
+            <Accordion key={index}>
               <AccordionSummary><div style={{display:"flex",alignItems:"center"}}><img src={person} style={{width:"35px",marginRight:"10px"}}/>{data.Name}</div></AccordionSummary>
               <AccordionDetails>
                 <div><b>Email :</b>{data.Email}</div>

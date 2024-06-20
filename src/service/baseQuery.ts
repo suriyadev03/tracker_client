@@ -75,7 +75,6 @@ export const baseQueryWithReauth: BaseQueryFn<
                 release();
             }
         }
-        console.log(args, api, extraOptions, "base");
 
         // retry the initial query
         result = await baseQuery(args, api, extraOptions);

@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ShareLogo from '../../../assets/shareLogo.png'
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { setAuthenticate  } from '../../../store/reducers/baseReducer';
+import { setAuthenticate, startLoading  } from '../../../store/reducers/baseReducer';
 
 interface IFormInput {
     EmpId: string;
@@ -25,6 +25,7 @@ const Login: React.FC = () => {
         }
     });
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
+        dispatch(startLoading(true))
         axios.post(import.meta.env.VITE_SERVER_URL+"/login", { EmpId: data.EmpId, Password: data.Password })
             .then((res) => {
                 if (res.data.status === "ok") {
@@ -37,7 +38,10 @@ const Login: React.FC = () => {
                 }
             })
             .catch((err) => {
+                dispatch(startLoading(false))
                 toast.warning(err.response.data.msg)
+            }).finally(()=>{
+                dispatch(startLoading(false))
             })
     };
     return (
@@ -90,19 +94,19 @@ const Login: React.FC = () => {
                         )}
                     />
                 </FormControl>
-                <Typography variant="inherit" sx={{ textAlign: 'right', mb: 2,fontSize:"12px",color:"orange",cursor:"pointer",textDecoration:"underLine" }}><Link to="/auth/forgetpassword">Forget Password ?</Link></Typography>
+                <Typography variant="inherit" sx={{ textAlign: 'right', mb: 2,fontSize:"12px",color:"orange",cursor:"pointer",textDecoration:"underLine" }}><Link to="/auth/forgetpassword"><span className='text-animate'>Forget Password ?</span></Link></Typography>
         
                 <div style={{ display: "flex", justifyContent: "flex-end",alignItems:"center",marginTop:20 }}>
-                <Typography variant="h6" sx={{ textAlign: 'center' }}>SignIn</Typography><Button type="submit" variant="contained" sx={{
-                        color: "black", backgroundColor: 'orange',borderRadius:"20px",marginLeft:"5px",
+                <Typography variant="h6" sx={{ textAlign: 'center' }}>SignIn</Typography><div className='btn-animate'><Button type="submit" variant="contained" sx={{
+                        color: "black", backgroundColor: 'orange',borderRadius:"20px",
                         '&:hover': {
                             backgroundColor: 'darkorange',
                         },
-                    }}><ArrowForwardIcon/></Button>
+                    }}><ArrowForwardIcon/></Button></div>
                 </div>
 
             </form>
-            <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Don't have a accound ? <span style={{textDecoration:"underline",cursor:"pointer"}} onClick={()=>navigate("/auth/register")}>Create</span></Typography>
+            <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Don't have a accound ? <span className='text-animate' onClick={()=>navigate("/auth/register")}>Create</span></Typography>
         </Box>
     );
 };
