@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import ShareLogo from '../../assets/shareLogo.png'
 import teamLogo from '../../assets/teamLogo.png'
-import dailyTreatLogo from '../../assets/dailyTreatLogo.png'
+import RegularTreatLogo from '../../assets/RegularTreatLogo.png'
 import birthdayLogo from '../../assets/birthdayLogo.webp'
 import availableBalance from '../../assets/availableBalance.png'
 import profileLogo from '../../assets/user-profile.png'
@@ -23,9 +23,9 @@ const Home = () => {
       logo: teamLogo
     },
     {
-      name: "Daily Treat",
-      routeTo: "dailytreat",
-      logo: dailyTreatLogo
+      name: "Regular Treat",
+      routeTo: "regulartreat",
+      logo: RegularTreatLogo
     },
     {
       name: "BirthDays",

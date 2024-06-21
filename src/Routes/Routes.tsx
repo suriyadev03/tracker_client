@@ -10,10 +10,10 @@ import { Login } from '../pages/Auth/Login';
 import { Register } from '../pages/Auth/Register';
 import { ForgetPassword } from '../pages/Auth/ForgetPassword';
 import { Team } from '../pages/Home/TeamMembers';
-import { DailyTreat } from '../pages/Home/DailyTreat';
 import { BirthDays } from '../pages/Home/BirthDays';
 import { AvailableBalance } from '../pages/Home/AvailableBalance';
 import { Calenders } from '../pages/Home/Calender';
+import { RegularTreat } from '../pages/Home/RegularTreat';
 
 interface RouteConfig {
     path: string;
@@ -47,9 +47,9 @@ const routerConfig: RouteConfig[] = [
         ),
     },
     {
-        path: 'dailytreat',
+        path: 'RegularTreat',
         element: (
-            <DailyTreat />
+            <RegularTreat />
         ),
     },
     {
