@@ -4,10 +4,10 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
 import { Link, useNavigate } from 'react-router-dom';
-import ShareLogo from '../../../assets/shareLogo.png'
+import appLogo from '../../../assets/appLogo.png'
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { setAuthenticate, startLoading  } from '../../../store/reducers/baseReducer';
+import { LoggedUserDetails, setAuthenticate, startLoading, userDetails  } from '../../../store/reducers/baseReducer';
 
 interface IFormInput {
     EmpId: string;
@@ -30,7 +30,10 @@ const Login: React.FC = () => {
             .then((res) => {
                 if (res.data.status === "ok") {
                     toast.success(res.data.msg)
-                    dispatch(setAuthenticate())
+                    dispatch(setAuthenticate(true))
+                    dispatch(LoggedUserDetails(res.data.loggedUser))
+                    dispatch(userDetails(res.data.users))
+                    localStorage.setItem("isloggedIn","true")
                     navigate("/home")
                 }
                 if (res.data.status === "warning") {
@@ -45,9 +48,10 @@ const Login: React.FC = () => {
             })
     };
     return (
+        <div className='authWrapper'>
         <Box sx={{ minWidth: 300,maxWidth: 300, m: "auto", p: 2 }}>
-            <div className='shareLogo'>
-                <img src={ShareLogo} />
+            <div className='appLogo flex justify-center'>
+                <img src={appLogo} className='w-28 pb-4'/>
             </div>
 
             <Typography variant="h6" sx={{ textAlign: 'center', mb: 1 }}>Access Your Account</Typography>
@@ -108,6 +112,7 @@ const Login: React.FC = () => {
             </form>
             <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Don't have a accound ? <span className='text-animate' onClick={()=>navigate("/auth/register")}>Create</span></Typography>
         </Box>
+        </div>
     );
 };
 

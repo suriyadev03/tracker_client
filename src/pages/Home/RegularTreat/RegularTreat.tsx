@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import {Button, Box, Typography } from '@mui/material';
+import { Button, Box, Typography, Chip } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import AccordionGroup from '@mui/joy/AccordionGroup';
-import Accordion from '@mui/joy/Accordion';
-import AccordionDetails from '@mui/joy/AccordionDetails';
-import AccordionSummary from '@mui/joy/AccordionSummary';
-import ShareLogo from '../../../assets/shareLogo.png'
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import appLogo from '../../../assets/appLogo.png'
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import Paper from '@mui/material/Paper';
+
 
 
 const getMondaysAndFridays = (startDate: string, endDate: string): Date[] => {
   const start = new Date(startDate);
+  // const [treatMembers,setTreatMembers] = useState()
   const end = new Date(endDate);
   let date = new Date(start);
   const days: Date[] = [];
@@ -25,7 +29,6 @@ const getMondaysAndFridays = (startDate: string, endDate: string): Date[] => {
   return days;
 };
 const Members = [
-  "Usman",
   "Mohan",
   "Nivedhitha",
   "Suriya",
@@ -33,49 +36,54 @@ const Members = [
   "Asik",
   "Rajesh",
   "Surendar",
-  "Balaji"
+  "Balaji",
+  "Usman",
 ]
+
 const RegularTreat: React.FC = () => {
   const navigate = useNavigate()
   const [dates, setDates] = useState<Date[]>([]);
+  const [treatMembers, setTreatMembers] = useState(Members)
 
   useEffect(() => {
-    const startDate = '2024-06-20';
-    const endDate = '2025-12-31';
+    const startDate = moment().format('YYYY-MM-DD');
+    const endDate = moment().clone().add(30, 'days').format('YYYY-MM-DD');
     const mondaysAndFridays = getMondaysAndFridays(startDate, endDate);
     setDates(mondaysAndFridays);
   }, []);
-   
-  const getNextMember = (index: number) => {
-    return Members[index % Members.length];
+
+  const postPonedTreat = () => {
+    const startDate = moment(dates[1]).format('YYYY-MM-DD');
+    const endDate = moment(dates[1],'YYYY-MM-DD').clone().add(30, 'days').format('YYYY-MM-DD');
+    const mondaysAndFridays = getMondaysAndFridays(startDate, endDate);
+    setDates(mondaysAndFridays);
   };
   return (
-    <Box sx={{ minWidth: 300, maxWidth: 300, minHeight: "550px",maxHeight: "550px", m: 'auto', p: 2 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-      <div className='pulse-single' onClick={()=>navigate("/home")}><ArrowBackIcon/></div>
-        <div className='shareLogo'>
-          <img src={ShareLogo}/>
-        </div>
-        <Typography variant="h5" sx={{ textAlign: 'center', mb: 2 }}>Treat Tracker</Typography>
-      </div>
-      <hr />
-      <Typography variant="h6" sx={{ textAlign: 'center', mb: 2 }}>Regular Treat</Typography>
-      <AccordionGroup sx={{ maxWidth: 400, maxHeight: "400px", overflow: "scroll", overflowX: "hidden" }}>
+    <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px" }}>
+      <Typography variant="h5" sx={{ textAlign: '',height:'30px', p: 1, color: "black" }}>Regular <b>Treat</b></Typography>
+
+      <div className='scrollBar-regular-treat'>
         {
           dates?.map((data, index) => (
-            <Accordion key={index}>
-              <AccordionSummary><div style={{ display: "flex", alignItems: "center" }}>{data.toDateString()}</div></AccordionSummary>
-              <AccordionDetails>
-                <div><b>Name :</b>{getNextMember(index)}</div>
-                <div className='buttonContainer'>
-                <Button disabled type="submit" variant="contained">Reject</Button>
-                <Button disabled type="submit" variant="contained">Postponed</Button>
-                <Button disabled type="submit" variant="contained">Completed</Button></div>
-              </AccordionDetails>
-            </Accordion>
+            <Card sx={{ mt: 1, mr: 1}}>
+
+              <CardContent sx={{ pt: 1, pl: 1.5, pr: 1, pb: 0,minWidth:350 ,maxWidth:390}}>
+                <Typography gutterBottom color="text.secondary" fontSize={13} variant="h6" component="div">
+                  {data.toDateString()}
+                </Typography>
+                <Typography variant="h6">
+                  <b>{treatMembers[index]}</b>
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ pt: 0, pl: 1, pr: 1, pb: 1, display: "flex", justifyContent: "space-between" }}>
+                <Chip label="Postponed" variant="outlined" disabled={index != 0} onClick={() => postPonedTreat()} sx={{ color: '#ff8d00' }} />
+                <Chip label="Completed" variant="outlined" disabled sx={{ color: '#ff8d00' }} />
+              </CardActions>
+            </Card>
+
           ))
         }
-      </AccordionGroup>
+      </div>
     </Box>
   )
 }

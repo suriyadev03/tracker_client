@@ -2,84 +2,141 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @font-face {
     src: url('./assets/font/AlegreyaSans-Bold.otf') format('opentype');
     font-family: "AlegreyaSans-Bold";
 }
+
 @font-face {
     src: url('./assets/font/AndikaNewBasic-R.ttf') format('truetype');
     font-family: "AndikaNewBasic-R";
 }
+
 @font-face {
     src: url('./assets/font/AndikaNewBasic-B.ttf') format('truetype');
     font-family: "AndikaNewBasic-B";
 }
-body{
+
+body {
     padding: 0;
     margin: 0;
     font-family: "Poppins", sans-serif !important;
     font-weight: 400;
-    height: 100vh !important;
+    height: 100dvh !important;
 }
+
+
+.upcomingBirthday {
+    height: 90px;
+    width: 100%;
+    border-radius: 20px;
+    color: black;
+/* From https://css.glass */
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.11);
+border-radius: 20px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.3px);
+-webkit-backdrop-filter: blur(3.3px);
+border: 1px solid rgba(255, 255, 255, 1);
+
+}
+
+.upcomingBirthday>div:nth-child(2) {
+    background-image: url(./assets/dateBg.png);
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background-size: contain;
+}
+.MuiBox-root {
+    flex-grow: 1;
+}
+
+.authWrapper {
+    height: 100vh;
+    display: flex;
+}
+
 .mainWrapper {
     background-image: url(../src/assets/desk_bg.png);
+    background-color: #c98f2224; /* Adjust opacity here */
+    background-blend-mode: overlay; /* Apply overlay blending mode */
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
-.shareLogo>img{
-    width: 60px;
+
+.MuiButtonBase-root:hover {
+    box-shadow: 0px 0px 32px 9px rgba(0, 0, 0, 0.1);
 }
-.shareLogo{
-    display: flex;
-    justify-content: center;
-}
-.MuiButtonBase-root:hover{
-    box-shadow: 0px 0px 32px 9px rgba(0,0,0,0.1);
-}
-.MuiInputBase-formControl{
+
+.MuiInputBase-formControl {
     border-radius: 30px !important;
-    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
 }
-h6,h5,input,label{
+
+h6,
+h5,
+input,
+label {
     font-family: "Poppins", sans-serif !important;
     font-weight: 400;
 }
-.MuiTypography-root{
+
+.MuiTypography-root {
     margin-bottom: 0px !important;
 }
-.MuiAccordionGroup-root::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+.scrollBar-regular-treat {
+    overflow: scroll;
+    max-height: 580px;
+    overflow-x: hidden;
+}
+.scrollBar-regular-treat>div{
+    background-color: rgba(255, 255, 255, 0.452) !important;
+    margin-right: 5px;
+}
+.scrollBar-regular-treat>div>div{
+    margin-bottom: 0px !important;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: transparent;
+    border-radius: 100px;
+    /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
 }
 
-.MuiAccordionGroup-root::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #F5F5F5;
+::-webkit-scrollbar {
+    /* margin-left: 10px; */
+    width: 6px;
+    background: transparent;
 }
 
-.MuiAccordionGroup-root::-webkit-scrollbar-thumb
-{
-	background-color: #000000;
+::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(to top, #d5dee7 0%, #df8714 0%,#ffffff73 100%);
+    /* height: 10px; */
+    border-radius: 100px;
+    /* background-image: linear-gradient(to top, #d5dee7 0%, #ffafbd 0%, #c9ffbf 100%); */
 
 }
-.MuiInputBase-root{
+
+.MuiInputBase-root {
     height: 40px !important;
 }
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
     margin-top: -10px !important;
 }
-.buttonContainer{
+
+.buttonContainer {
     display: flex;
     justify-content: space-between;
 }
-.buttonContainer>button{
+
+.buttonContainer>button {
     color: #000000;
     background-color: orange;
     border-radius: 20px;
@@ -88,30 +145,35 @@ h6,h5,input,label{
     font-family: "Poppins", sans-serif !important;
     font-weight: 400;
 }
-.buttonContainer>button:hover{
+
+.buttonContainer>button:hover {
     background-color: darkgoldenrod;
 }
 
 @keyframes pulse {
     from {
-      box-shadow:  0 0 0 0 rgba(255,255,255,1),
-                   0 0 0 0 rgba(51,51,51,1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 1),
+            0 0 0 0 rgba(51, 51, 51, 1);
     }
+
     to {
-      box-shadow:  0 0 0 0.65em rgba(255,255,255,1),
-                   0 0 0 1em rgba(51,51,51,0);
+        box-shadow: 0 0 0 0.65em rgba(255, 255, 255, 1),
+            0 0 0 1em rgba(51, 51, 51, 0);
     }
-  }
-  .pulse-single {
+}
+
+.pulse-single {
     border-radius: 50%;
     cursor: pointer;
     display: inline;
     text-align: center;
     height: 24px;
-  }
-  .pulse-single:active {
+}
+
+.pulse-single:active {
     animation: pulse 0.2s 1 ease-out;
-  }
+}
+
 @media (max-width: 480px) {
     .mainWrapper {
         background-image: url(../src/assets/mobile_bg.png);
@@ -126,14 +188,17 @@ h6,h5,input,label{
     transition: all 500ms ease;
     margin-left: 5px;
 }
+
 .btn-animate:hover {
     box-shadow: 0 0 20px #e89e00;
 }
+
 .text-animate:hover {
     box-shadow: 0 0 10px #e89e00;
     background-color: #e89f0065;
 }
-.text-animate{
+
+.text-animate {
     border-radius: 20px;
     justify-content: center;
     align-items: center;
@@ -143,32 +208,72 @@ h6,h5,input,label{
     cursor: pointer;
     text-decoration: underline;
 }
-.pulse-single-square{
-    background: rgba( 255, 255, 255, 0.15 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 16px );
--webkit-backdrop-filter: blur( 16px );
-border-radius: 25px;
+
+.pulse-single-square {
+    border-radius: 20px;
+    
+    box-shadow:  5px 5px 21px #dcdec7,
+                 -5px -5px 21px #ffffff;
+    
 }
-.pulse-single-square>div{
+
+.pulse-single-square>div {
     width: 100%;
     height: 100%;
-    border-radius: 25px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 0px !important;
+    background: linear-gradient(145deg, #e4e6ce, #fffff5) !important;
 }
-.pulse-single-square>div>img{
+
+.pulse-single-square>div>img {
     border-radius: 25px;
     width: 50%;
 }
-.pulse-single-square>div:hover{
-/* From https://css.glass */
-background: rgba(255, 255, 255, 0.28);
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(9.8px);
--webkit-backdrop-filter: blur(9.8px);
-border: 1px solid rgba(255, 255, 255, 0.31);
+
+.pulse-single-square>div:hover {
+    border-radius: 10px;
+    background: #fdffe5 !important;
+    box-shadow:  5px 5px 21px #dcdec7,
+                 -5px -5px 21px #ffffff;
 }
 
-/* box-shadow: inset 0px 7px 87px -42px #e89e00; */
+.css-r79cuq {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 400px;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.css-r79cuq::-webkit-scrollbar {
+    display: none;
+
+}
+.menuLogo>svg{
+    font-size: 72px;
+    background: -webkit-linear-gradient(#eee, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bottomNavigation>div>button{
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    /* animation: blink-animation 1s linear infinite; */
+}
+.bottomNavigation>div>button:active {
+    background: rgba(255, 255, 255, 0.21) !important; /* Blinking color */
+    background-color: transparent;
+    transition: none; /* Disable transition during active state */
+  }
+.teamMembers{
+    padding-bottom: 14px !important;
+}

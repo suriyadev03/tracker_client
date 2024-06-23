@@ -5,12 +5,13 @@ import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import ShareLogo from '../../../assets/shareLogo.png'
+import appLogo from '../../../assets/appLogo.png'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { startLoading } from '../../../store/reducers/baseReducer';
 import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
+import moment from 'moment';
 
 interface IFormInput {
     Name: string;
@@ -34,13 +35,17 @@ const Register: React.FC = () => {
         }
     })
     const onSubmit: SubmitHandler<IFormInput> = data => {
+        const dateMoment = moment(data.DateOfBirth);
+        const dateOnly = dateMoment.format('YYYY-MM-DD');
         const userData = {
             Name: data.Name,
             EmpId: data.EmpId,
             Email: data.Email,
             Password: data.Password,
-            DateOfBirth: data.DateOfBirth
+            DateOfBirth: dateOnly
         };
+        console.log("userData",userData);
+        
         dispatch(startLoading(true))
         axios.post(import.meta.env.VITE_SERVER_URL+"/register", userData)
             .then((res) => {
@@ -55,9 +60,10 @@ const Register: React.FC = () => {
             })
     };
     return (
+        <div className='authWrapper'>
         <Box sx={{ minWidth: 300,maxWidth: 300, m: 'auto',p:2 }}>
-            <div className='shareLogo'>
-                <img src={ShareLogo} />
+        <div className='appLogo flex justify-center'>
+                <img src={appLogo} className='w-28 pb-4'/>
             </div>
             <Typography variant="h6" sx={{ textAlign: 'center', mb: 2 }}>Open Your Account</Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -176,6 +182,7 @@ const Register: React.FC = () => {
             </form> 
             <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Already have a accound ? <span className='text-animate' onClick={()=>navigate("/auth/login")}>SignIn</span></Typography>
         </Box>
+        </div>
     );
 };
 

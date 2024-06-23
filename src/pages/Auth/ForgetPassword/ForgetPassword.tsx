@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { FormControl, TextField, Button, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ShareLogo from '../../../assets/shareLogo.png'
+import appLogo from '../../../assets/appLogo.png'
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { MuiOtpInput } from 'mui-one-time-password-input'
@@ -90,10 +90,11 @@ const ForgetPassword: React.FC = () => {
     setOtpValid(false)
   }
   return (
+    <div className='authWrapper'>
     <Box sx={{ minWidth: 300,maxWidth: 300, m: "auto", p: 2 }}>
-      <div className='shareLogo'>
-        <img src={ShareLogo} />
-      </div>
+    <div className='appLogo flex justify-center'>
+                <img src={appLogo} className='w-28 pb-4'/>
+            </div>
 
       <Typography variant="h6" sx={{ textAlign: 'center', mb: 1 }}>Forget Your Password</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -158,6 +159,7 @@ const ForgetPassword: React.FC = () => {
       </form>
       <Typography variant='h6' sx={{ marginTop:"30px",textAlign: 'center',fontSize:"12px" }}>Are you remember your Password ? <span className='text-animate' onClick={()=>navigate("/auth/login")}>Login</span></Typography>
     </Box>
+    </div>
   );
 };
 
