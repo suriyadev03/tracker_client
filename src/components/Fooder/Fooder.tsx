@@ -5,7 +5,6 @@ import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab, { tabClasses } from '@mui/joy/Tab';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Person from '@mui/icons-material/Person';
 import { Link } from 'react-router-dom';
@@ -19,7 +18,6 @@ export default function BottomNavigation() {
         sx={{
           flexGrow: 1,
           position: "fixed",
-          // m: -3,
           bottom: 3,
           borderTopLeftRadius: '12px',
           borderTopRightRadius: '12px',
@@ -31,7 +29,7 @@ export default function BottomNavigation() {
           aria-label="Bottom Navigation"
           className='bottomNavigation'
           value={index}
-          onChange={(event, value) => setIndex(value as number)}
+          onChange={(_, value) => setIndex(value as number)}
           sx={(theme) => ({
             p: 1,
             borderRadius: 16,

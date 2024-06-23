@@ -15,8 +15,6 @@ import { AvailableBalance } from '../pages/Home/AvailableBalance';
 import { Calenders } from '../pages/Home/Calender';
 import { RegularTreat } from '../pages/Home/RegularTreat';
 import { Profile } from '../pages/Home/Profile';
-import BottomNavigation from '../components/Fooder/Fooder';
-import Header from '../components/HeaderPage/Header';
 import Layout from './Layout';
 
 interface RouteConfig {
@@ -24,8 +22,6 @@ interface RouteConfig {
     element: React.ReactNode;
     children?: RouteConfig[];
 }
-
-
 
 const routerConfig: RouteConfig[] = [
     {

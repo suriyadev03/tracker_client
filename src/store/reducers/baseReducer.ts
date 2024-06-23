@@ -9,7 +9,7 @@ interface BaseState {
   loggedUser: any;
   usersBirthDays : String[]
 }
-const initialState: BaseState = { isLoading: false, error: null, users: [], isAuthenticated: false, loggedUser: [],birthDays :[] };
+const initialState: BaseState = { isLoading: false, error: null, users: [], isAuthenticated: false, loggedUser: [],usersBirthDays :[] };
 
 const baseReducer = createSlice({
   name: "base",

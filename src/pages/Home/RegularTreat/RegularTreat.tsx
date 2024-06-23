@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Box, Typography, Chip } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Typography, Chip } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import appLogo from '../../../assets/appLogo.png'
-import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import Paper from '@mui/material/Paper';
 
 
 
@@ -41,9 +36,8 @@ const Members = [
 ]
 
 const RegularTreat: React.FC = () => {
-  const navigate = useNavigate()
   const [dates, setDates] = useState<Date[]>([]);
-  const [treatMembers, setTreatMembers] = useState(Members)
+  const [treatMembers ] = useState(Members)
 
   useEffect(() => {
     const startDate = moment().format('YYYY-MM-DD');

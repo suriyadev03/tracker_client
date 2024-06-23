@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { useAppSelector } from '../../../hooks/useRedux/useAppRedux';
 import { RootState } from '../../../store';
-import { User } from '../../../types';
 import moment from 'moment';
 
 const BirthDays = () => {
