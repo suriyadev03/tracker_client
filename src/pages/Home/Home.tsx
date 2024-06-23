@@ -22,6 +22,7 @@ interface HomeMenu {
 const Home = () => {
   // const {usersBirthDays} = useAppSelector((state =>state.application))
   const { users } = useAppSelector((state: RootState) => state.application);
+  const { loggedUser } = useAppSelector((state: RootState) => state.application);
   const [upcomingBirthdays, setUpcomingBirthdays] = useState<string[]>([]);
   const [upcomingBirthDaydate, setUpcomingBirthDaydate] = useState<any>({})
   useEffect(() => {
@@ -102,6 +103,10 @@ const Home = () => {
       return 'Night';
     }
   };
+  const getName = () => {
+    const fullName = loggedUser.Name ?? '';
+    return fullName.split(' ')[0];
+  }
   const navigate = useNavigate()
   useEffect(() => {
     if (localStorage.getItem("isloggedIn") === "true") {
@@ -115,7 +120,7 @@ const Home = () => {
   return (
     <Box sx={{ alignItems: "center", minWidth: 300, maxWidth: 350, pl: 2, pr: 2, display: 'flex', flexGrow: 1, flexDirection: 'column', alignContent: 'center' }}>
       <div className='w-[96%]'>
-        <Typography variant="h5" sx={{ textAlign: '', p: 1, color: "black" }}>Good {getCurrentTimeOfDay()} <b>{}</b></Typography>
+        <Typography variant="h5" sx={{ textAlign: '', p: 1, color: "black" }}>Good {getCurrentTimeOfDay()} <b>{getName()}</b></Typography>
         <Stack spacing={1} sx={{ width: "100%", height: '20%' }}>
           <div className='upcomingBirthday flex items-center justify-between'>
             <div className='pl-3 pb-3'>
