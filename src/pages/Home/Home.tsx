@@ -26,7 +26,6 @@ const Home = () => {
   const [upcomingBirthDaydate, setUpcomingBirthDaydate] = useState<any>({})
   useEffect(() => {
     console.log("users", users);
-    debugger
     const momentDates: moment.Moment[] = users.map(dateStr => moment(dateStr.DateOfBirth));
 
     const today: moment.Moment = moment();
@@ -81,7 +80,6 @@ const Home = () => {
   ]
   console.log("upcomingBirthdays", upcomingBirthdays[0]);
   const getBirthMonth = () => {
-    debugger
     console.log("upcomingBirthDaydate.toString()",upcomingBirthDaydate);
     // upcomingBirthDaydate.
     const monthNumber = 7;
