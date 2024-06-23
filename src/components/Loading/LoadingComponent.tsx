@@ -8,9 +8,7 @@ const Loading: FunctionComponent = () => {
     return (
         <>{
             isLoading && <div className='loading-container'>
-                <Box >
                     <CircularProgress />
-                </Box>
 
             </div>
         }

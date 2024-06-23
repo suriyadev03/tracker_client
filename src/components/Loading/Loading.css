@@ -7,7 +7,7 @@
     height: 100vh;
     position: absolute;
     z-index: 100;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(1.5px);
   }
   
   .loading-spinner {
