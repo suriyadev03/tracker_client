@@ -7,7 +7,7 @@ interface BaseState {
   users: User[];
   isAuthenticated: boolean;
   loggedUser: any;
-  usersBirthDays : String[]
+  usersBirthDays : User[]
 }
 const initialState: BaseState = { isLoading: false, error: null, users: [], isAuthenticated: false, loggedUser: [],usersBirthDays :[] };
 

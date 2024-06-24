@@ -9,7 +9,6 @@ import moment from 'moment';
 
 const getMondaysAndFridays = (startDate: string, endDate: string): Date[] => {
   const start = new Date(startDate);
-  // const [treatMembers,setTreatMembers] = useState()
   const end = new Date(endDate);
   let date = new Date(start);
   const days: Date[] = [];

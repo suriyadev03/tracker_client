@@ -50,7 +50,6 @@ export const baseQueryWithReauth: BaseQueryFn<
                 const refreshToken = getLocalStorage(LOCAL_CONSTANTS.REFRESH);
 
                 if (refreshToken) {
-                    // try to get a new token
                     const refreshResult: any  = await baseQuery(
                         {
                             url: "/auth/refreshToken",
@@ -76,7 +75,6 @@ export const baseQueryWithReauth: BaseQueryFn<
             }
         }
 
-        // retry the initial query
         result = await baseQuery(args, api, extraOptions);
     }
     return result;

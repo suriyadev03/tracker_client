@@ -53,12 +53,13 @@ export default function BottomNavigation() {
             variant="plain"
             size="sm"
             disableUnderline
-            sx={{ borderRadius: 'lg', p: 0,display:"flex",justifyContent:"space-evenly" }}
+            sx={{ borderRadius: 'lg', p: 0,display:"flex",justifyContent:"space-between" }}
           >
             <Link to={'/home'}>
               <Tab
                 disableIndicator
                 orientation="vertical"
+                sx={{width:"100px"}}
               >
                 <ListItemDecorator>
                   <ArrowBackIcon sx={{ fontSize: 40 }} />
@@ -69,7 +70,7 @@ export default function BottomNavigation() {
               <Tab
                 disableIndicator
                 orientation="vertical"
-                sx={{ ml: 1, mr: 1 }}
+                sx={{width:"100px"}}
               >
                 <ListItemDecorator>
                   <HomeRoundedIcon sx={{ fontSize: 40 }} />
@@ -80,6 +81,7 @@ export default function BottomNavigation() {
               <Tab
                 disableIndicator
                 orientation="vertical"
+                sx={{width:"100px"}}
               >
                 <ListItemDecorator >
                   <Person sx={{ fontSize: 40 }} />

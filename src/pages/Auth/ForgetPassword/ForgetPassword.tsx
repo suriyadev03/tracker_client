@@ -9,13 +9,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { MuiOtpInput } from 'mui-one-time-password-input'
 import { startLoading } from '../../../store/reducers/baseReducer';
 import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
+import { IFormInput } from '../../../types';
 
-
-interface IFormInput {
-  Email: string;
-  Password: string;
-  otp: number;
-}
 
 const ForgetPassword: React.FC = () => {
   const navigate = useNavigate()

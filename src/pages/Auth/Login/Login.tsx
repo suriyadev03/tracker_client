@@ -8,23 +8,19 @@ import appLogo from '../../../assets/appLogo.png'
 import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { LoggedUserDetails, setAuthenticate, startLoading, userDetails  } from '../../../store/reducers/baseReducer';
-
-interface IFormInput {
-    EmpId: string;
-    Password: string;
-}
+import { IFormInputLogin } from '../../../types';
 
 const Login: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     
-    const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
+    const { control, handleSubmit, formState: { errors } } = useForm<IFormInputLogin>({
         defaultValues: {
             EmpId: '',
             Password: ''
         }
     });
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const onSubmit: SubmitHandler<IFormInputLogin> = (data) => {
         dispatch(startLoading(true))
         axios.post(import.meta.env.VITE_SERVER_URL+"/login", { EmpId: data.EmpId, Password: data.Password })
             .then((res) => {

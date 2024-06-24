@@ -12,20 +12,13 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { startLoading } from '../../../store/reducers/baseReducer';
 import { useAppDispatch } from '../../../hooks/useRedux/useAppRedux';
 import moment from 'moment';
+import { IFormInputRegister } from '../../../types';
 
-interface IFormInput {
-    Name: string;
-    EmpId: string;
-    Email: string;
-    Password: string;
-    DateOfBirth: string | null;
-    POSITION : any
-}
 
 const Register: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
+    const { control, handleSubmit, formState: { errors } } = useForm<IFormInputRegister>({
         defaultValues: {
             Name: '',
             EmpId: '',
@@ -34,7 +27,7 @@ const Register: React.FC = () => {
             DateOfBirth: null
         }
     })
-    const onSubmit: SubmitHandler<IFormInput> = data => {
+    const onSubmit: SubmitHandler<IFormInputRegister> = data => {
         const dateMoment = moment(data.DateOfBirth);
         const dateOnly = dateMoment.format('YYYY-MM-DD');
         const userData = {
@@ -44,7 +37,6 @@ const Register: React.FC = () => {
             Password: data.Password,
             DateOfBirth: dateOnly
         };
-        console.log("userData",userData);
         
         dispatch(startLoading(true))
         axios.post(import.meta.env.VITE_SERVER_URL+"/register", userData)

@@ -10,23 +10,15 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux/useAppRe
 import axios from "axios";
 import { startLoading } from "../../../store/reducers/baseReducer";
 import { toast } from "react-toastify";
+import { IFormInputRegister } from "../../../types";
 
-
-interface IFormInput {
-    Name: string;
-    EmpId: string;
-    Email: string;
-    Password: string;
-    DateOfBirth: string | null;
-    POSITION: any
-}
 
 const Profile = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [edit, setEdit] = useState(false)
     const { loggedUser } = useAppSelector((state => state.application))
-    const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
+    const { control, handleSubmit, formState: { errors } } = useForm<IFormInputRegister>({
         defaultValues: {
             Name: loggedUser.Name,
             EmpId: loggedUser.EmpId,
@@ -35,14 +27,13 @@ const Profile = () => {
             DateOfBirth: null
         }
     })
-    const onSubmit: SubmitHandler<IFormInput> = data => {
+    const onSubmit: SubmitHandler<IFormInputRegister> = data => {
         dispatch(startLoading(true))
         const userData = {
             Name: data.Name,
             EmpId: data.EmpId,
             Email: data.Email,
         };
-        console.log("userData", userData);
 
         axios.post(import.meta.env.VITE_SERVER_URL + "/updateUser", userData)
             .then((res) => {
