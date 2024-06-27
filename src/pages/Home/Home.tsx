@@ -14,6 +14,7 @@ import { RootState } from '../../store';
 import { HomeMenu, User } from '../../types';
 import { BirthDayDetails } from '../../store/reducers/baseReducer';
 import personImg from '../../assets/person.png'
+import checkImageUrl from '../../service/checkImg';
 
 
 const Home: React.FC = () => {
@@ -21,6 +22,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate()
   const { users } = useAppSelector((state: RootState) => state.application);
   // const { loggedUser } = useAppSelector((state: RootState) => state.application);
+  const [profileImg, setProfileImg] = useState('')
   const [birthDayOrder, setBirthDayOrder] = useState<User[]>([])
   const [loggedName, setLoggedName] = useState('')
 
@@ -48,14 +50,19 @@ const Home: React.FC = () => {
       const sortedBirthdays = [...users].sort(compareUpcomingBirthdays);
       dispatch(BirthDayDetails(sortedBirthdays));
       setBirthDayOrder(sortedBirthdays);
-      
 
+      const serverUrl = import.meta.env.VITE_SERVER_URL
+      const userImg = `${serverUrl}/uploads/${sortedBirthdays[0]._id}.png`;
+      const isValidImage = await checkImageUrl(userImg);
+      const checkImg = isValidImage ? userImg : personImg;
+      setProfileImg(checkImg)
       const loggedId = localStorage.getItem("islogged");
       if (loggedId) {
         const findLoggedUser = users.findIndex((item) => item._id === loggedId);
         if (findLoggedUser !== -1) {
           console.log("users[findLoggedUser].Name", users[findLoggedUser].Name);
           setLoggedName(users[findLoggedUser].Name);
+
         } else {
           console.log("User not found");
         }
@@ -63,8 +70,8 @@ const Home: React.FC = () => {
     };
 
     updateData();
-  }, [users,dispatch]);
-  
+  }, [users, dispatch]);
+
   const HOME_MENUS: HomeMenu[] = [
     {
       name: "Team Members",
@@ -117,9 +124,9 @@ const Home: React.FC = () => {
 
   // }
 
- 
+
   useEffect(() => {
-    
+
     if (localStorage.getItem("isloggedIn") === "true") {
       navigate('/home')
     } else {
@@ -127,19 +134,19 @@ const Home: React.FC = () => {
     }
   }, [])
 
-    
+
   return (
     <Box sx={{ alignItems: "center", minWidth: 300, maxWidth: 350, pl: 2, pr: 2, display: 'flex', flexGrow: 1, flexDirection: 'column', alignContent: 'center' }}>
       <div className='w-[96%] '>
         <Typography variant="h5" sx={{ textAlign: '', p: 1, color: "black" }}>Good {getCurrentTimeOfDay()} <b>{loggedName.split(' ')[0]}</b></Typography>
-        <Stack spacing={1} sx={{ width: "100%"}}>
+        <Stack spacing={1} sx={{ width: "100%" }}>
           <div className='upcomingBirthday h-24 w-full rounded-2xl text-black shadow-lg flex items-center justify-between'>
             <div className='pl-3 pb-3'>
               <span className='text-xs'>Upcomming Birthday</span>
               <div className='flex'>
                 <div className='flex items-center'>
-                <img src={!!birthDayOrder.length ? birthDayOrder[0].ProfileImg.length ? birthDayOrder[0].ProfileImg : personImg  :  personImg} className='w-12 h-12 rounded-full' />
-                <span className='pl-2 w-36 flex-wrap'><b>{!!birthDayOrder.length ? birthDayOrder[0].Name : <span className='text-gray-900 blur-[3px]'>birthday boy</span>}</b></span></div>
+                  <img src={profileImg} className='w-12 h-12 rounded-full' />
+                  <span className='pl-2 w-36 flex-wrap'><b>{!!birthDayOrder.length ? birthDayOrder[0].Name : <span className='text-gray-900 blur-[3px]'>birthday boy</span>}</b></span></div>
               </div>
             </div>
             <div className='flex flex-col mr-3 items-center'>
@@ -167,11 +174,11 @@ const Home: React.FC = () => {
           HOME_MENUS.map((data, index) => (
             <div className='pulse-single-square rounded-2xl' key={index}>
               <>
-              <Paper elevation={2} sx={{ textAlign: 'center' }} className='mt-0 h-full w-full rounded-2xl flex flex-col items-center justify-center' key={index} onClick={() => navigate(`/${data.routeTo}`)}>
+                <Paper elevation={2} sx={{ textAlign: 'center' }} className='mt-0 h-full w-full rounded-2xl flex flex-col items-center justify-center' key={index} onClick={() => navigate(`/${data.routeTo}`)}>
 
-                <span className='menuLogo'>{data.logo}</span>
-              <span className='text-xs text-gray-400'>{data.name}</span>
-              </Paper>
+                  <span className='menuLogo'>{data.logo}</span>
+                  <span className='text-xs text-gray-400'>{data.name}</span>
+                </Paper>
               </>
             </div>
           ))

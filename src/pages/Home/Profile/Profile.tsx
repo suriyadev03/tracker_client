@@ -3,7 +3,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Button, FormControl } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch } from "../../../hooks/useRedux/useAppRedux";
@@ -12,6 +12,7 @@ import { LoggedUserDetails, startLoading, userDetails } from "../../../store/red
 import { toast } from "react-toastify";
 import { IFormInputRegister } from "../../../types";
 import personImg from '../../../assets/person.png'
+import checkImageUrl from "../../../service/checkImg";
 
 
 const Profile = () => {
@@ -19,9 +20,9 @@ const Profile = () => {
     const dispatch = useAppDispatch()
     const [edit, setEdit] = useState(false)
     // const { loggedUser } = useAppSelector((state => state.application))
-    const [dataURI, setDataURI] = useState<string | undefined>('');
-    // const [dataURI, setDataURI] = useState<string | undefined>('');
-    const { control, handleSubmit,setValue, formState: { errors } } = useForm<IFormInputRegister>({
+    const [file, setFile] = useState<File | null>(null);
+    const [profileImg, setProfileImg] = useState('')
+    const { control, handleSubmit, setValue, formState: { errors } } = useForm<IFormInputRegister>({
         defaultValues: {
             Name: '',
             EmpId: '',
@@ -31,17 +32,20 @@ const Profile = () => {
             ProfileImg: ""
         }
     })
+
     const onSubmit: SubmitHandler<IFormInputRegister> = data => {
         dispatch(startLoading(true))
         const userData = {
             Name: data.Name,
             EmpId: data.EmpId,
             Email: data.Email,
-            ProfileImg : ""
+            ProfileImg: ""
+
         };
 
         axios.post(import.meta.env.VITE_SERVER_URL + "/updateUser", userData)
             .then((res) => {
+                onProfileImgUpload(res.data.loggedUser._id)
                 toast.success(res.data.msg);
                 dispatch(LoggedUserDetails(res.data.loggedUser))
                 setEdit(!edit)
@@ -62,47 +66,73 @@ const Profile = () => {
         navigate("/auth/login")
         toast.success("You have been logged out")
     }
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const result = reader.result as string;
-                setDataURI(result);
-                console.log("dataURI",dataURI);
-                
-            };
-            reader.readAsDataURL(file);
+    const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const selectedFile = e.target.files[0];
+            setFile(selectedFile);
+            const previewUrl = URL.createObjectURL(selectedFile);
+            setProfileImg(previewUrl)
         }
     };
-    useEffect(()=>{
-        if(localStorage.getItem("isloggedIn") === "true"){
-            axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
-            .then((res) => {
-                if (res.data.status === "ok") {
+    const renameFile = (file: File, newName: string): File => {
+        return new File([file], newName, { type: file.type });
+    };
+    const onProfileImgUpload = async (profileName: any) => {
+        if (file) {
+            const newFileName = `${profileName}.png`;
+            const renamedFile = renameFile(file, newFileName);
+            const formData = new FormData();
+            formData.append('image', renamedFile);
+            try {
+                await axios.post<{
+                    file: any; message: string
+                }>(import.meta.env.VITE_SERVER_URL + '/profileUpload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
-                    dispatch(userDetails(res.data.users))
-                    const loggedId = localStorage.getItem("islogged")
-                    const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
-                    dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
-                    setValue("Name",res.data.users[findLoggedUser].Name)                     
-                    setValue("EmpId",res.data.users[findLoggedUser].EmpId)                     
-                    setValue("Email",res.data.users[findLoggedUser].Email)                     
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                
-            })
+            } catch (error) {
+            }
         }
-    },[])
+
+    };
+    useEffect(()  =>  {
+        const fetchData = () => {
+            if (localStorage.getItem("isloggedIn") === "true") {
+                axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
+                    .then(async (res) => {
+                        if (res.data.status === "ok") {
+    
+                            dispatch(userDetails(res.data.users))
+                            const loggedId = localStorage.getItem("islogged")
+                            const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
+                            dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
+                            setValue("Name", res.data.users[findLoggedUser].Name)
+                            setValue("EmpId", res.data.users[findLoggedUser].EmpId)
+                            setValue("Email", res.data.users[findLoggedUser].Email)
+                            const userImg: any = `${import.meta.env.VITE_SERVER_URL}/uploads/${res.data.users[findLoggedUser]._id}.png`
+                            const isValidImage = checkImageUrl(userImg);
+
+                            const checkImg = await isValidImage ? userImg : personImg;
+                            setProfileImg(checkImg)
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+    
+                    })
+            }
+        }
+        fetchData()
+    }, [])
     return (
-        <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px", display: "flex", flexDirection: 'column',justifyContent:"center" }}>
+        <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px", display: "flex", flexDirection: 'column', justifyContent: "center" }}>
             <Typography variant="h5" sx={{ textAlign: '', height: '30px', p: 1, color: "black" }}>Your <b>Profile</b></Typography>
             <div className="w-[150px] h-[150px] rounded-full self-center mt-3 relative border-4 border-solid border-orange-300 ">
-                <img src={personImg} className="w-full h-full rounded-full relative" />
+                <img src={profileImg} className="w-full h-full rounded-full relative" />
                 {edit && <div className="absolute w-[150px] h-[150px] rounded-full bg-[#e2e8f09e] top-0 flex justify-center items-center cursor-pointer"><AddAPhotoIcon /></div>}
-                {edit && <input type="file" onChange={handleChange} className="absolute top-0 left-0 h-full w-full rounded-full opacity-0 cursor-pointer"/>}
+                {edit && <input type="file" onChange={onFileChange} className="absolute top-0 left-0 h-full w-full rounded-full opacity-0 cursor-pointer" />}
 
             </div>
             {/* <div className="w-[160px] h-[160px] bg-no-repeat bg-contain" style={{backgroundImage:personImg}}></div> */}
@@ -168,8 +198,9 @@ const Profile = () => {
                         )}
                     />
                 </FormControl>
+
                 <Button variant="outlined" disabled={!edit} type="submit" color="warning" sx={{ width: 150, margin: "20px", color: "orange", border: "2px solid orange" }}>Update</Button>
-            <Button variant="outlined" color="warning" sx={{ width:"150px", margin: "20px", color: "orange", border: "2px solid orange" }} onClick={Logout}>Logout</Button>
+                <Button variant="outlined" color="warning" sx={{ width: "150px", margin: "20px", color: "orange", border: "2px solid orange" }} onClick={Logout}>Logout</Button>
             </form>
 
         </Box>

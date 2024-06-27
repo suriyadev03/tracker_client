@@ -4,13 +4,32 @@ import { Box, Card, CardContent, Typography } from '@mui/material';
 import profileLogo from '../../../assets/person.png'
 import { RootState } from '../../../store';
 import { User } from '../../../types';
+import checkImageUrl from '../../../service/checkImg';
 
 
 const Team: React.FC = () => {
   const { users } = useAppSelector((state: RootState) => state.application);
-
+  const [imageSrcList, setImageSrcList] = useState<Record<string, string>>({});
   const [userList, setUserList] = useState<User[]>([]);
 
+  useEffect(() => {
+    const fetchImages = async () => {
+      const serverUrl = import.meta.env.VITE_SERVER_URL;
+      const newImageSrcList: Record<string, string> = {};
+
+      for (const user of users) {
+        const userImg = `${serverUrl}/uploads/${user._id}.png`;
+        const isValidImage = await checkImageUrl(userImg);
+
+        newImageSrcList[user._id] = isValidImage ? userImg : profileLogo;
+      }
+
+      setImageSrcList(newImageSrcList);
+    };
+
+    fetchImages();
+  }, [users]);
+  
   useEffect(() => {
     setUserList(users)
   }, [users])
@@ -26,7 +45,7 @@ const Team: React.FC = () => {
             <Card sx={{ mt: 1 }}>
 
               <CardContent sx={{ minWidth: 350, maxWidth: 390, display: "flex" }} className='pb-1'>
-                <img src={data.ProfileImg.length ? data.ProfileImg :profileLogo } className='w-16 h-16 rounded-full' />
+                <img src={imageSrcList[data._id] || profileLogo} className='w-16 h-16 rounded-full' />
                 <div className='pl-2 flex flex-col text-sm'>
                   <span>{data.Name}</span>
                   <span>{data.Email}</span>
@@ -61,3 +80,7 @@ const Team: React.FC = () => {
 }
 
 export default Team
+function checkImage(userImg: string) {
+  throw new Error('Function not implemented.');
+}
+
