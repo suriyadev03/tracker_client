@@ -29,7 +29,7 @@ const BirthDays = () => {
           }
         </div> : <div className='scrollBar-regular-treat'>
           {
-            Array.from({ length: 10 }, (_, i) => (
+            Array.from({ length: 10 }, (_) => (
               <Card sx={{ mt: 1 }}>
 
                 <CardContent sx={{ minWidth: 350, maxWidth: 390, display: "flex" }} className='teamMembers'>
