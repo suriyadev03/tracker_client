@@ -80,7 +80,3 @@ const Team: React.FC = () => {
 }
 
 export default Team
-function checkImage(userImg: string) {
-  throw new Error('Function not implemented.');
-}
-
