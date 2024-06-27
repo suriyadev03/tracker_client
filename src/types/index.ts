@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 export interface User {
+    split(arg0: string): unknown;
     id: number;
     Name: string;
     Email: string;
@@ -10,6 +11,7 @@ export interface User {
     EmpId: string;
     Password: string;
     Employee : string;
+    ProfileImg : string
 
   } 
 
@@ -37,6 +39,7 @@ export interface User {
   export interface IFormInputLogin {
     EmpId: string;
     Password: string;
+    
 }
 export interface IFormInputRegister {
   Name: string;
@@ -45,5 +48,6 @@ export interface IFormInputRegister {
   Password: string;
   DateOfBirth: string | null;
   POSITION : any
+  ProfileImg : string
   
 }

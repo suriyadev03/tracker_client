@@ -2,29 +2,33 @@ import { Box, TextField, Typography } from "@mui/material"
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
-import profileLogo from '../../../assets/user-profile.png'
-import { useState } from "react";
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { useEffect, useState } from "react";
 import { Button, FormControl } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux/useAppRedux";
+import { useAppDispatch } from "../../../hooks/useRedux/useAppRedux";
 import axios from "axios";
-import { startLoading } from "../../../store/reducers/baseReducer";
+import { LoggedUserDetails, startLoading, userDetails } from "../../../store/reducers/baseReducer";
 import { toast } from "react-toastify";
 import { IFormInputRegister } from "../../../types";
+import personImg from '../../../assets/person.png'
 
 
 const Profile = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [edit, setEdit] = useState(false)
-    const { loggedUser } = useAppSelector((state => state.application))
-    const { control, handleSubmit, formState: { errors } } = useForm<IFormInputRegister>({
+    // const { loggedUser } = useAppSelector((state => state.application))
+    const [dataURI, setDataURI] = useState<string | undefined>('');
+    // const [dataURI, setDataURI] = useState<string | undefined>('');
+    const { control, handleSubmit,setValue, formState: { errors } } = useForm<IFormInputRegister>({
         defaultValues: {
-            Name: loggedUser.Name,
-            EmpId: loggedUser.EmpId,
-            Email: loggedUser.Email,
+            Name: '',
+            EmpId: '',
+            Email: '',
             Password: '',
-            DateOfBirth: null
+            DateOfBirth: null,
+            ProfileImg: ""
         }
     })
     const onSubmit: SubmitHandler<IFormInputRegister> = data => {
@@ -33,11 +37,13 @@ const Profile = () => {
             Name: data.Name,
             EmpId: data.EmpId,
             Email: data.Email,
+            ProfileImg : ""
         };
 
         axios.post(import.meta.env.VITE_SERVER_URL + "/updateUser", userData)
             .then((res) => {
                 toast.success(res.data.msg);
+                dispatch(LoggedUserDetails(res.data.loggedUser))
                 setEdit(!edit)
             })
             .catch((err) => {
@@ -51,14 +57,56 @@ const Profile = () => {
         setEdit(!edit)
     }
     const Logout = () => {
-        localStorage.setItem("isloggedIn", "false");
+        localStorage.removeItem("islogged");
+        localStorage.removeItem("isloggedIn");
         navigate("/auth/login")
+        toast.success("You have been logged out")
     }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const result = reader.result as string;
+                setDataURI(result);
+                console.log("dataURI",dataURI);
+                
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    useEffect(()=>{
+        if(localStorage.getItem("isloggedIn") === "true"){
+            axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
+            .then((res) => {
+                if (res.data.status === "ok") {
+
+                    dispatch(userDetails(res.data.users))
+                    const loggedId = localStorage.getItem("islogged")
+                    const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
+                    dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
+                    setValue("Name",res.data.users[findLoggedUser].Name)                     
+                    setValue("EmpId",res.data.users[findLoggedUser].EmpId)                     
+                    setValue("Email",res.data.users[findLoggedUser].Email)                     
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                
+            })
+        }
+    },[])
     return (
-        <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px", display: "flex", flexDirection: 'column' }}>
+        <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px", display: "flex", flexDirection: 'column',justifyContent:"center" }}>
             <Typography variant="h5" sx={{ textAlign: '', height: '30px', p: 1, color: "black" }}>Your <b>Profile</b></Typography>
-            <div className="self-end p-5" onClick={activeEditProfile}>{!edit ? <EditNoteIcon /> : <CloseIcon />}</div>
-            <img src={profileLogo} className="w-32 self-center" />
+            <div className="w-[150px] h-[150px] rounded-full self-center mt-3 relative border-4 border-solid border-orange-300 ">
+                <img src={personImg} className="w-full h-full rounded-full relative" />
+                {edit && <div className="absolute w-[150px] h-[150px] rounded-full bg-[#e2e8f09e] top-0 flex justify-center items-center cursor-pointer"><AddAPhotoIcon /></div>}
+                {edit && <input type="file" onChange={handleChange} className="absolute top-0 left-0 h-full w-full rounded-full opacity-0 cursor-pointer"/>}
+
+            </div>
+            {/* <div className="w-[160px] h-[160px] bg-no-repeat bg-contain" style={{backgroundImage:personImg}}></div> */}
+            <div className="mt-[-15px] ml-[60%]" onClick={activeEditProfile}>{!edit ? <EditNoteIcon /> : <CloseIcon />}</div>
             <form onSubmit={handleSubmit(onSubmit)} className="self-center mt-3 flex flex-col items-center">
                 <FormControl style={{ marginTop: "10px" }}>
                     <Controller
@@ -121,8 +169,8 @@ const Profile = () => {
                     />
                 </FormControl>
                 <Button variant="outlined" disabled={!edit} type="submit" color="warning" sx={{ width: 150, margin: "20px", color: "orange", border: "2px solid orange" }}>Update</Button>
+            <Button variant="outlined" color="warning" sx={{ width:"150px", margin: "20px", color: "orange", border: "2px solid orange" }} onClick={Logout}>Logout</Button>
             </form>
-            <Button variant="outlined" color="warning" sx={{ margin: "20px", color: "orange", border: "2px solid orange" }} onClick={Logout}>Logout</Button>
 
         </Box>
     )

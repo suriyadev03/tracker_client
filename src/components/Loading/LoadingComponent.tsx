@@ -1,16 +1,17 @@
 import { FunctionComponent } from 'react';
-import './Loading.css'; // Import CSS file for animations
-import {  CircularProgress } from '@mui/material';
 import { useAppSelector } from '../../hooks/useRedux/useAppRedux';
+import { Backdrop } from '@mui/material';
 
 const Loading: FunctionComponent = () => {
     const { isLoading } = useAppSelector(state => state.application)
     return (
         <>{
-            isLoading && <div className='loading-container'>
-                    <CircularProgress />
-
-            </div>
+            isLoading && <Backdrop
+            sx={{ color: 'yellow', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isLoading}
+          >
+            <div className='loader'></div>
+          </Backdrop>
         }
         </>
 

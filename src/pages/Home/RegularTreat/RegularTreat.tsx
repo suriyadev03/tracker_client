@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import moment from 'moment';
 
 
-
 const getMondaysAndFridays = (startDate: string, endDate: string): Date[] => {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -23,7 +22,6 @@ const getMondaysAndFridays = (startDate: string, endDate: string): Date[] => {
   return days;
 };
 const Members = [
-  "Mohan",
   "Nivedhitha",
   "Suriya",
   "SethuPathi",
@@ -31,7 +29,10 @@ const Members = [
   "Rajesh",
   "Surendar",
   "Balaji",
+  "Venkadesu",
   "Usman",
+  "Mohan",
+
 ]
 
 const RegularTreat: React.FC = () => {
@@ -40,19 +41,20 @@ const RegularTreat: React.FC = () => {
 
   useEffect(() => {
     const startDate = moment().format('YYYY-MM-DD');
-    const endDate = moment().clone().add(30, 'days').format('YYYY-MM-DD');
+    const endDate = moment().clone().add(40, 'days').format('YYYY-MM-DD');
     const mondaysAndFridays = getMondaysAndFridays(startDate, endDate);
     setDates(mondaysAndFridays);
   }, []);
 
   const postPonedTreat = () => {
     const startDate = moment(dates[1]).format('YYYY-MM-DD');
-    const endDate = moment(dates[1],'YYYY-MM-DD').clone().add(30, 'days').format('YYYY-MM-DD');
+    const endDate = moment(dates[1],'YYYY-MM-DD').clone().add(40, 'days').format('YYYY-MM-DD');
     const mondaysAndFridays = getMondaysAndFridays(startDate, endDate);
     setDates(mondaysAndFridays);
   };
+
   return (
-    <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px" }}>
+    <Box sx={{  minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px" }}>
       <Typography variant="h5" sx={{ textAlign: '',height:'30px', p: 1, color: "black" }}>Regular <b>Treat</b></Typography>
 
       <div className='scrollBar-regular-treat'>
@@ -70,7 +72,7 @@ const RegularTreat: React.FC = () => {
               </CardContent>
               <CardActions sx={{ pt: 0, pl: 1, pr: 1, pb: 1, display: "flex", justifyContent: "space-between" }}>
                 <Chip label="Postponed" variant="outlined" disabled={index != 0} onClick={() => postPonedTreat()} sx={{ color: '#ff8d00' }} />
-                <Chip label="Completed" variant="outlined" disabled sx={{ color: '#ff8d00' }} />
+                <Chip label="Completed" variant="outlined" disabled sx={{ color: '#ff8d00',border:"red" }} />
               </CardActions>
             </Card>
 
@@ -78,8 +80,8 @@ const RegularTreat: React.FC = () => {
         }
       </div>
     </Box>
-  )
-}
+);
+};
 
 export default RegularTreat
 

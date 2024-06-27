@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../types";
+import baseService from "../../service/baseService";
 
 interface BaseState {
   isLoading: boolean;
@@ -7,9 +8,16 @@ interface BaseState {
   users: User[];
   isAuthenticated: boolean;
   loggedUser: any;
-  usersBirthDays : User[]
+  usersBirthDays: User[]
 }
-const initialState: BaseState = { isLoading: false, error: null, users: [], isAuthenticated: false, loggedUser: [],usersBirthDays :[] };
+const initialState: BaseState = {
+  isLoading: false,
+  error: null,
+  users: [],
+  isAuthenticated: false,
+  loggedUser: [],
+  usersBirthDays: []
+};
 
 const baseReducer = createSlice({
   name: "base",
@@ -40,8 +48,19 @@ const baseReducer = createSlice({
       state.error = null;
     }
   },
+  extraReducers(builder) {
+    builder.addMatcher(baseService.endpoints.loginUser.matchPending, (state, action) => {
+      console.log(state, action, "extraReducers");
+    })
+    builder.addMatcher(baseService.endpoints.loginUser.matchFulfilled, (state, action) => {
+      console.log(state, action, "extraReducers");
+    })
+    builder.addMatcher(baseService.endpoints.loginUser.matchRejected, (state, action) => {
+      console.log(state, action, "extraReducers");
+    })
+  },
 });
 
-export const { startLoading, stopLoading, setError, clearError, userDetails, setAuthenticate, LoggedUserDetails,BirthDayDetails} = baseReducer.actions;
+export const { startLoading, stopLoading, setError, clearError, userDetails, setAuthenticate, LoggedUserDetails, BirthDayDetails } = baseReducer.actions;
 
 export default baseReducer.reducer;

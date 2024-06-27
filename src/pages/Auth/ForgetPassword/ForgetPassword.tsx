@@ -22,7 +22,7 @@ const ForgetPassword: React.FC = () => {
     }
   });
   const [otp, setOtp] = useState<any>("");
-  const [verifyOtp, srtVerifyOtp] = useState<any>("");
+  const [verifyOtp, setVerifyOtp] = useState<any>("");
   const [otpValid, setOtpValid] = useState<any>(false);
   const [updatePass, setUpdatePass] = useState<any>(false);
 
@@ -48,20 +48,19 @@ const ForgetPassword: React.FC = () => {
         dispatch(startLoading(false))
         return toast.error("OPT Expried Try Again")
       }
-      axios.post(import.meta.env.VITE_SERVER_URL+"/forgetpassword", { Email: data.Email, otp: Math.floor(1000 + Math.random() * 9000) })
+      axios.post(import.meta.env.VITE_SERVER_URL+"/forgetpassword", { Email: data.Email})
         .then((res) => {
           if (res.data.status === "ok") {
             toast.success(res.data.msg)
             setOtpValid(true)
-            srtVerifyOtp(res.data.otp)
+            setVerifyOtp(res.data.otp)
+            dispatch(startLoading(false))
           }
         })
         .catch((err) => {
           dispatch(startLoading(false))
           toast.error(err.response.data.msg)
-        }).finally(()=>{
-          dispatch(startLoading(false))
-      })
+        })
       setTimeout(() => {
         toast.error("OPT Expried Try Again")
         setOtpValid(false)
@@ -74,6 +73,7 @@ const ForgetPassword: React.FC = () => {
       } else {
         toast.error("Please Enter Valid OTP")
       }
+      dispatch(startLoading(false))
     }
 
   };
@@ -85,7 +85,7 @@ const ForgetPassword: React.FC = () => {
     setOtpValid(false)
   }
   return (
-    <div className='authWrapper'>
+    <div className='h-[100vh] flex'>
     <Box sx={{ minWidth: 300,maxWidth: 300, m: "auto", p: 2 }}>
     <div className='appLogo flex justify-center'>
                 <img src={appLogo} className='w-28 pb-4'/>
@@ -117,7 +117,7 @@ const ForgetPassword: React.FC = () => {
             )}
           />
         </FormControl>
-        {otpValid && !updatePass && <Typography variant="h6" sx={{ textAlign: 'right', mb: 1, fontSize: "12px", cursor: "pointer" }}><span onClick={tryAgain}>Try Again ?</span></Typography>}
+        {otpValid && !updatePass && <Typography variant="h6" sx={{ textAlign: 'right', mb: 1, fontSize: "12px", cursor: "pointer" }}><span onClick={tryAgain} className='text-animate mt-2 mb-2'>Try Again ?</span></Typography>}
         {otpValid && !updatePass && <MuiOtpInput value={otp} onChange={handleChange} sx={{ width: "300px" }} />}
         <br />{updatePass && <FormControl fullWidth margin="dense">
           <Controller

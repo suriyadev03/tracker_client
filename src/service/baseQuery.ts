@@ -25,7 +25,7 @@ export const resetAuth = (): void => {
 };
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "" || "",
+    baseUrl: import.meta.env.VITE_SERVER_URL || "",
     prepareHeaders: (headers) => {
         const token = getLocalStorage(LOCAL_CONSTANTS.ACCESS);
         if (token) {

@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@font-face {
-    src: url('./assets/font/AlegreyaSans-Bold.otf') format('opentype');
-    font-family: "AlegreyaSans-Bold";
-}
-
-@font-face {
-    src: url('./assets/font/AndikaNewBasic-R.ttf') format('truetype');
-    font-family: "AndikaNewBasic-R";
-}
-
-@font-face {
-    src: url('./assets/font/AndikaNewBasic-B.ttf') format('truetype');
-    font-family: "AndikaNewBasic-B";
-}
-
 body {
     padding: 0;
     margin: 0;
@@ -28,17 +12,9 @@ body {
 
 
 .upcomingBirthday {
-    height: 90px;
-    width: 100%;
-    border-radius: 20px;
-    color: black;
-background: rgba(255, 255, 255, 0.11);
-border-radius: 20px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(3.3px);
--webkit-backdrop-filter: blur(3.3px);
-border: 1px solid rgba(255, 255, 255, 1);
-
+    box-shadow: 1px 1px 5px #dcdec7, -5px -5px 21px #ffffff;
+    /* background-image: url(./assets/birthDayBanner.png); */
+    background-size: 100% 100%;
 }
 
 .upcomingBirthday>div:nth-child(2) {
@@ -49,19 +25,15 @@ border: 1px solid rgba(255, 255, 255, 1);
     border-radius: 20px;
     background-size: contain;
 }
+
 .MuiBox-root {
     flex-grow: 1;
 }
 
-.authWrapper {
-    height: 100vh;
-    display: flex;
-}
-
 .mainWrapper {
     background-image: url(../src/assets/desk_bg.png);
-    background-color: #c98f2224; /* Adjust opacity here */
-    background-blend-mode: overlay; /* Apply overlay blending mode */
+    background-color: #c98f2224;
+    background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
@@ -88,36 +60,37 @@ label {
 .MuiTypography-root {
     margin-bottom: 0px !important;
 }
+
 .scrollBar-regular-treat {
     overflow: scroll;
     max-height: 580px;
     overflow-x: hidden;
+    margin-left: 5px;
 }
-.scrollBar-regular-treat>div{
+
+.scrollBar-regular-treat>div {
     background-color: rgba(255, 255, 255, 0.452) !important;
     margin-right: 5px;
 }
-.scrollBar-regular-treat>div>div{
+
+.scrollBar-regular-treat>div>div {
     margin-bottom: 0px !important;
 }
-::-webkit-scrollbar-track {
+
+.scrollBar-regular-treat::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: transparent;
     border-radius: 100px;
-    /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
 }
 
-::-webkit-scrollbar {
-    /* margin-left: 10px; */
+.scrollBar-regular-treat::-webkit-scrollbar {
     width: 6px;
     background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-    background-image: linear-gradient(to top, #d5dee7 0%, #df8714 0%,#ffffff73 100%);
-    /* height: 10px; */
+.scrollBar-regular-treat::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(to top, #d5dee7 0%, #df8714 0%, #ffffff73 100%);
     border-radius: 100px;
-    /* background-image: linear-gradient(to top, #d5dee7 0%, #ffafbd 0%, #c9ffbf 100%); */
 
 }
 
@@ -127,25 +100,6 @@ label {
 
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
     margin-top: -10px !important;
-}
-
-.buttonContainer {
-    display: flex;
-    justify-content: space-between;
-}
-
-.buttonContainer>button {
-    color: #000000;
-    background-color: orange;
-    border-radius: 20px;
-    font-size: 10px;
-    width: 30%;
-    font-family: "Poppins", sans-serif !important;
-    font-weight: 400;
-}
-
-.buttonContainer>button:hover {
-    background-color: darkgoldenrod;
 }
 
 @keyframes pulse {
@@ -158,18 +112,6 @@ label {
         box-shadow: 0 0 0 0.65em rgba(255, 255, 255, 1),
             0 0 0 1em rgba(51, 51, 51, 0);
     }
-}
-
-.pulse-single {
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline;
-    text-align: center;
-    height: 24px;
-}
-
-.pulse-single:active {
-    animation: pulse 0.2s 1 ease-out;
 }
 
 @media (max-width: 480px) {
@@ -208,21 +150,11 @@ label {
 }
 
 .pulse-single-square {
-    border-radius: 20px;
-    
-    box-shadow:  5px 5px 21px #dcdec7,
-                 -5px -5px 21px #ffffff;
-    
+    box-shadow: 1px 1px 5px #dcdec7, -5px -5px 21px #ffffff;
+
 }
 
 .pulse-single-square>div {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px !important;
     background: linear-gradient(145deg, #e4e6ce, #fffff5) !important;
 }
 
@@ -234,8 +166,8 @@ label {
 .pulse-single-square>div:hover {
     border-radius: 10px;
     background: #fdffe5 !important;
-    box-shadow:  5px 5px 21px #dcdec7,
-                 -5px -5px 21px #ffffff;
+    box-shadow: 5px 5px 5px #dcdec7,
+        -5px -5px 10px #ffffff;
 }
 
 .css-r79cuq {
@@ -243,35 +175,39 @@ label {
     overflow-x: hidden;
     height: 400px;
     -ms-overflow-style: none;
-    /* IE and Edge */
     scrollbar-width: none;
-    /* Firefox */
 }
 
-.css-r79cuq::-webkit-scrollbar {
-    display: none;
-
+.bottomNavigation{
+    border: 1px solid rgba(128, 128, 128, 0.174);
 }
-.menuLogo>svg{
-    font-size: 72px;
-    background: -webkit-linear-gradient(#eee, #333);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bottomNavigation>div>button{
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-    /* animation: blink-animation 1s linear infinite; */
-}
-.bottomNavigation>div>button:active {
-    background: rgba(255, 255, 255, 0.21) !important; /* Blinking color */
-    background-color: transparent;
-    transition: none; /* Disable transition during active state */
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 40px;
+    aspect-ratio: 1;
+    display: grid;
+    border: 4px solid #0000;
+    border-radius: 50%;
+    border-color: #ccc #0000;
+    animation: l16 1s infinite linear;
   }
-.teamMembers{
-    padding-bottom: 14px !important;
-}
+  .loader::before,
+  .loader::after {    
+    content: "";
+    grid-area: 1/1;
+    margin: 2px;
+    border: inherit;
+    border-radius: 50%;
+  }
+  .loader::before {
+    border-color: #bb6305 #0000;
+    animation: inherit; 
+    animation-duration: .5s;
+    animation-direction: reverse;
+  }
+  .loader::after {
+    margin: 8px;
+  }
+  @keyframes l16 { 
+    100%{transform: rotate(1turn)}
+  }

@@ -35,6 +35,7 @@ export default function BottomNavigation() {
             borderRadius: 16,
             maxWidth: 350,
             mx: 'auto',
+            backgroundColor:"#ffffdd",
             boxShadow: theme.shadow.sm,
             '--joy-shadowChannel': theme.vars.palette[colors[index]].darkChannel,
             [`& .${tabClasses.root}`]: {

@@ -52,7 +52,7 @@ const Register: React.FC = () => {
             })
     };
     return (
-        <div className='authWrapper'>
+        <div className='h-[100vh] flex'>
         <Box sx={{ minWidth: 300,maxWidth: 300, m: 'auto',p:2 }}>
         <div className='appLogo flex justify-center'>
                 <img src={appLogo} className='w-28 pb-4'/>
