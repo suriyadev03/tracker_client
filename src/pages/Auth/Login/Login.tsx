@@ -9,12 +9,10 @@ import { toast } from 'react-toastify';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { LoggedUserDetails, startLoading } from '../../../store/reducers/baseReducer';
 import { IFormInputLogin } from '../../../types';
-// import { useLoginUserMutation } from '../../../service/baseService';
 
 const Login: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    // const [loginUser, { isLoading }] = useLoginUserMutation()
 
     const { control, handleSubmit, formState: { errors } } = useForm<IFormInputLogin>({
         defaultValues: {
@@ -25,15 +23,12 @@ const Login: React.FC = () => {
     });
     const onSubmit: SubmitHandler<IFormInputLogin> = async(data) => {
         dispatch(startLoading(true))
-        // await loginUser({ EmpId: data.EmpId, Password: data.Password }).unwrap();
 
         axios.post(import.meta.env.VITE_SERVER_URL + "/login", { EmpId: data.EmpId, Password: data.Password })
             .then((res) => {
                 if (res.data.status === "ok") {
                     toast.success(res.data.msg)
-                    // dispatch(setAuthenticate(true))
                     dispatch(LoggedUserDetails(res.data.loggedUser))
-                    // dispatch(userDetails(res.data.users))
                     localStorage.setItem("isloggedIn","true" )
                     localStorage.setItem("islogged",res.data.loggedUser._id)
                     navigate("/home")

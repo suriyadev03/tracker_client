@@ -14,15 +14,12 @@ import { RootState } from '../../store';
 import { HomeMenu, User } from '../../types';
 import { BirthDayDetails } from '../../store/reducers/baseReducer';
 import personImg from '../../assets/person.png'
-import checkImageUrl from '../../service/checkImg';
 
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { users } = useAppSelector((state: RootState) => state.application);
-  // const { loggedUser } = useAppSelector((state: RootState) => state.application);
-  const [profileImg, setProfileImg] = useState('')
   const [birthDayOrder, setBirthDayOrder] = useState<User[]>([])
   const [loggedName, setLoggedName] = useState('')
 
@@ -51,11 +48,6 @@ const Home: React.FC = () => {
       dispatch(BirthDayDetails(sortedBirthdays));
       setBirthDayOrder(sortedBirthdays);
 
-      const serverUrl = import.meta.env.VITE_SERVER_URL
-      const userImg = `${serverUrl}/uploads/${sortedBirthdays[0]._id}.png`;
-      const isValidImage = await checkImageUrl(userImg);
-      const checkImg = isValidImage ? userImg : personImg;
-      setProfileImg(checkImg)
       const loggedId = localStorage.getItem("islogged");
       if (loggedId) {
         const findLoggedUser = users.findIndex((item) => item._id === loggedId);
@@ -120,10 +112,6 @@ const Home: React.FC = () => {
       return 'Night';
     }
   };
-  // const getName = () =>{
-
-  // }
-
 
   useEffect(() => {
 
@@ -145,7 +133,7 @@ const Home: React.FC = () => {
               <span className='text-xs'>Upcomming Birthday</span>
               <div className='flex'>
                 <div className='flex items-center'>
-                  <img src={profileImg} className='w-12 h-12 rounded-full' />
+                  <img src={personImg} className='w-12 h-12 rounded-full' />
                   <span className='pl-2 w-36 flex-wrap'><b>{!!birthDayOrder.length ? birthDayOrder[0].Name : <span className='text-gray-900 blur-[3px]'>birthday boy</span>}</b></span></div>
               </div>
             </div>

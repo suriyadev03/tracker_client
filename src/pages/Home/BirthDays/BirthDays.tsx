@@ -20,7 +20,6 @@ const BirthDays = () => {
                   <div className='pl-2 flex flex-col text-sm'>
                     <Typography variant="h6" sx={{ textAlign: '', height: '30px', p: 1, color: "black" }}>{(data.DateOfBirth)?.slice(0, 10)}</Typography>
                     <span className='pl-2'>{data.Name}</span>
-                    {/* <span></span> */}
                   </div>
                 </CardContent>
               </Card>
@@ -37,7 +36,6 @@ const BirthDays = () => {
                   <div className='pl-2 flex flex-col text-sm'>
                     <Typography variant="h6" sx={{ textAlign: '', height: '30px', p: 1, color: "black" }}><span className='text-gray-900 blur-[3px]'>06-01-2000</span></Typography>
                     <span className='pl-2 text-gray-900 blur-[3px]'>Suriya</span>
-                    {/* <span></span> */}
                   </div>
                 </CardContent>
               </Card>
