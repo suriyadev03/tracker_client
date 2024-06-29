@@ -56,21 +56,21 @@ const Profile = () => {
         setEdit(!edit)
     }
     const Logout = () => {
-        localStorage.removeItem("islogged");
-        localStorage.removeItem("isloggedIn");
+        sessionStorage.removeItem("islogged");
+        sessionStorage.removeItem("isloggedIn");
         navigate("/auth/login")
         toast.success("You have been logged out")
     } 
 
     useEffect(()  =>  {
         const fetchData = () => {
-            if (localStorage.getItem("isloggedIn") === "true") {
+            if (sessionStorage.getItem("isloggedIn") === "true") {
                 axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
                     .then(async (res) => {
                         if (res.data.status === "ok") {
     
                             dispatch(userDetails(res.data.users))
-                            const loggedId = localStorage.getItem("islogged")
+                            const loggedId = sessionStorage.getItem("islogged")
                             const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
                             dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
                             setValue("Name", res.data.users[findLoggedUser].Name)

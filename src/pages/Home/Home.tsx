@@ -48,7 +48,7 @@ const Home: React.FC = () => {
       dispatch(BirthDayDetails(sortedBirthdays));
       setBirthDayOrder(sortedBirthdays);
 
-      const loggedId = localStorage.getItem("islogged");
+      const loggedId = sessionStorage.getItem("islogged");
       if (loggedId) {
         const findLoggedUser = users.findIndex((item) => item._id === loggedId);
         if (findLoggedUser !== -1) {
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
 
-    if (localStorage.getItem("isloggedIn") === "true") {
+    if (sessionStorage.getItem("isloggedIn") === "true") {
       navigate('/home')
     } else {
       navigate('/auth/login')

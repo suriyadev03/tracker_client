@@ -29,8 +29,8 @@ const Login: React.FC = () => {
                 if (res.data.status === "ok") {
                     toast.success(res.data.msg)
                     dispatch(LoggedUserDetails(res.data.loggedUser))
-                    localStorage.setItem("isloggedIn","true" )
-                    localStorage.setItem("islogged",res.data.loggedUser._id)
+                    sessionStorage.setItem("isloggedIn","true" )
+                    sessionStorage.setItem("islogged",res.data.loggedUser._id)
                     navigate("/home")
                     
                 }

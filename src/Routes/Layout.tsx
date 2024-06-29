@@ -14,13 +14,13 @@ const Layout = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (localStorage.getItem("isloggedIn") === "true") {
+        if (sessionStorage.getItem("isloggedIn") === "true") {
             axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
                 .then((res) => {
                     if (res.data.status === "ok") {
 
                         dispatch(userDetails(res.data.users))
-                        const loggedId = localStorage.getItem("islogged")
+                        const loggedId = sessionStorage.getItem("islogged")
                         const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
                         dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
                     }
