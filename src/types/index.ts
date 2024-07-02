@@ -29,7 +29,7 @@ export interface User {
   export interface HomeMenu {
     name: string;
     routeTo: string;
-    logo: ReactElement;
+    logo: ReactElement | string;
   }
   export interface IFormInput {
     Email: string;

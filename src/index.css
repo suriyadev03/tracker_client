@@ -10,7 +10,15 @@ body {
     height: 100dvh !important;
 }
 
+.hideScrollbar::-webkit-scrollbar {
+    display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.hideScrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 .upcomingBirthday {
     box-shadow: 1px 1px 5px #dcdec7, -5px -5px 21px #ffffff;
     /* background-image: url(./assets/birthDayBanner.png); */

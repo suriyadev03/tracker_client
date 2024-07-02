@@ -13,7 +13,6 @@ import { IFormInputLogin } from '../../../types';
 const Login: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-
     const { control, handleSubmit, formState: { errors } } = useForm<IFormInputLogin>({
         defaultValues: {
             EmpId: '',
@@ -45,9 +44,10 @@ const Login: React.FC = () => {
                 dispatch(startLoading(false))
             })
     };
+    
     return (
         <div className='h-[100vh] flex'>
-            <Box sx={{ minWidth: 300, maxWidth: 300, m: "auto", p: 2 }}>
+            <Box sx={{ minWidth: 300, maxWidth: 350, m: "auto", p: 2 }}>
                 <div className='appLogo flex justify-center'>
                     <img src={appLogo} className='w-28 pb-4' />
                 </div>
@@ -64,10 +64,9 @@ const Login: React.FC = () => {
                                     {...field}
                                     id="EmpId"
                                     size='small'
-                                    label="Employee Id / Email"
+                                    label="EmpId/Email"
                                     error={!!errors.EmpId}
                                     helperText={errors.EmpId ? errors.EmpId.message : ''}
-                                    style={{ width: "300px" }}
                                 />
                             )}
                         />

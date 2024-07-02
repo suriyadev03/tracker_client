@@ -16,6 +16,8 @@ import { Calenders } from '../pages/Home/Calender';
 import { RegularTreat } from '../pages/Home/RegularTreat';
 import { Profile } from '../pages/Home/Profile';
 import Layout from './Layout';
+import { PageNotFount } from '../components/PageNotFount';
+import { ExpenceTracker } from '../pages/Home/ExpenceTracker';
 
 interface RouteConfig {
     path: string;
@@ -42,7 +44,7 @@ const routerConfig: RouteConfig[] = [
         {
             path: '*',
             element: (
-                <div>Page not found</div>
+                <PageNotFount/>
             ),
         },
         {
@@ -79,6 +81,12 @@ const routerConfig: RouteConfig[] = [
             path: 'profile',
             element: (
                 <Profile />
+            ),
+        },
+        {
+            path: 'expenceTracker',
+            element: (
+                <ExpenceTracker />
             ),
         }]
     },

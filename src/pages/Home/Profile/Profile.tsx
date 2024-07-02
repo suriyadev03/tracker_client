@@ -3,10 +3,10 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, FormControl } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../hooks/useRedux/useAppRedux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux/useAppRedux";
 import axios from "axios";
 import { LoggedUserDetails, startLoading, userDetails } from "../../../store/reducers/baseReducer";
 import { toast } from "react-toastify";
@@ -18,11 +18,12 @@ const Profile = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [edit, setEdit] = useState(false)
+    const {loggedUser} = useAppSelector((state => state.application))
     const { control, handleSubmit, setValue, formState: { errors } } = useForm<IFormInputRegister>({
         defaultValues: {
-            Name: '',
-            EmpId: '',
-            Email: '',
+            Name: loggedUser.Name,
+            EmpId: loggedUser.EmpId,
+            Email: loggedUser.Email,
             Password: '',
             DateOfBirth: null,
             ProfileImg: ""
@@ -60,33 +61,39 @@ const Profile = () => {
         sessionStorage.removeItem("isloggedIn");
         navigate("/auth/login")
         toast.success("You have been logged out")
-    } 
-
-    useEffect(()  =>  {
-        const fetchData = () => {
-            if (sessionStorage.getItem("isloggedIn") === "true") {
-                axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
-                    .then(async (res) => {
-                        if (res.data.status === "ok") {
-    
-                            dispatch(userDetails(res.data.users))
-                            const loggedId = sessionStorage.getItem("islogged")
-                            const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
-                            dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
-                            setValue("Name", res.data.users[findLoggedUser].Name)
-                            setValue("EmpId", res.data.users[findLoggedUser].EmpId)
-                            setValue("Email", res.data.users[findLoggedUser].Email)
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-    
-                    })
-            }
+    }
+    const isEmpty = (obj: {}) => {
+        return Object.keys(obj).length === 0;
+    }
+    useEffect(() => {
+        if (isEmpty(loggedUser)) {
+            console.log("empty data");
+            
+            axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
+            .then((res) => {
+                if (res.data.status === "ok") {
+                    dispatch(userDetails(res.data.users))
+                    console.log(loggedUser.length);
+                    
+                    const loggedId = sessionStorage.getItem("islogged")
+                    const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
+                    dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
+                    setValue("Name", res.data.users[findLoggedUser].Name)
+                    setValue("EmpId", res.data.users[findLoggedUser].EmpId)
+                    setValue("Email", res.data.users[findLoggedUser].Email)
+                    
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                
+            })
+        }else{
+            console.log("not empty object");
         }
-        fetchData()
-    }, [])
-    return (
+        }, [])
+        // console.log(loggedUser.length);
+        return (
         <Box sx={{ minWidth: 300, maxWidth: 350, minHeight: "550px", maxHeight: "550px", display: "flex", flexDirection: 'column', justifyContent: "center" }}>
             <Typography variant="h5" sx={{ textAlign: '', height: '30px', p: 1, color: "black" }}>Your <b>Profile</b></Typography>
             <div className="w-[150px] h-[150px] rounded-full self-center mt-3 relative border-4 border-solid border-orange-300 ">

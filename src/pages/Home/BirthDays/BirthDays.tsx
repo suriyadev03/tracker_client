@@ -12,8 +12,8 @@ const BirthDays = () => {
       {
         !!usersBirthDays.length ? <div className='scrollBar-regular-treat'>
           {
-            usersBirthDays?.map((data) => (
-              <Card sx={{ mt: 1 }}>
+            usersBirthDays?.map((data,i) => (
+              <Card sx={{ mt: 1 }} key={i}>
 
                 <CardContent sx={{ minWidth: 350, maxWidth: 390, display: "flex" }} className='teamMembers'>
                   <img src={cakeImg} className='w-16' />
@@ -28,8 +28,8 @@ const BirthDays = () => {
           }
         </div> : <div className='scrollBar-regular-treat'>
           {
-            Array.from({ length: 10 }, (_) => (
-              <Card sx={{ mt: 1 }}>
+            Array.from({ length: 10 }, (_,i) => (
+              <Card sx={{ mt: 1 }} key={i}>
 
                 <CardContent sx={{ minWidth: 350, maxWidth: 390, display: "flex" }} className='teamMembers'>
                   <img src={cakeImg} className='w-16 blur-[3px]' />

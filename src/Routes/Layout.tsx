@@ -18,11 +18,12 @@ const Layout = () => {
             axios.post(import.meta.env.VITE_SERVER_URL + "/getUser", {})
                 .then((res) => {
                     if (res.data.status === "ok") {
-
                         dispatch(userDetails(res.data.users))
                         const loggedId = sessionStorage.getItem("islogged")
                         const findLoggedUser = res.data.users.findIndex((item: { _id: any }) => item._id === loggedId);
                         dispatch(LoggedUserDetails(res.data.users[findLoggedUser]))
+                        console.log("layout");
+                        
                     }
                 })
                 .catch((err) => {

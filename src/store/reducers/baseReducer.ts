@@ -15,7 +15,7 @@ const initialState: BaseState = {
   error: null,
   users: [],
   isAuthenticated: false,
-  loggedUser: [],
+  loggedUser: {},
   usersBirthDays: []
 };
 

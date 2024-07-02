@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/joy/Stack';
@@ -14,6 +14,8 @@ import { RootState } from '../../store';
 import { HomeMenu, User } from '../../types';
 import { BirthDayDetails } from '../../store/reducers/baseReducer';
 import personImg from '../../assets/person.png'
+import ExpenceTracker from '../../assets/tripExpence.png'
+import { getBirthMonth } from '../../utils/localHelpers';
 
 
 const Home: React.FC = () => {
@@ -86,19 +88,17 @@ const Home: React.FC = () => {
       logo: <WalletIcon sx={{ fontSize: "80px" }} />
     },
     {
+      name: "Expence Tracker",
+      routeTo: "expenceTracker",
+      logo: <img src={ExpenceTracker} style={{width:'100px'}}/>
+    },
+    {
       name: "Calender",
       routeTo: "calender",
       logo: <EventAvailableIcon sx={{ fontSize: "80px" }} />
     }
   ]
-  const getBirthMonth = () => {
-    const month = Number(birthDayOrder[0].DateOfBirth.slice(5, 7))
-    const monthNumber = month.toString();
-    const date = new Date(0, Number(monthNumber) - 1);
-    const monthName = date.toLocaleString('default', { month: 'long' }).slice(0, 3);
-    return monthName
 
-  }
   const getCurrentTimeOfDay = () => {
     const currentHour = new Date().getHours();
 
@@ -114,18 +114,17 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-
-    if (sessionStorage.getItem("isloggedIn") === "true") {
-      navigate('/home')
-    } else {
+    if (sessionStorage.getItem("isloggedIn") !== "true") {
       navigate('/auth/login')
+    } else {
+      navigate('/home')
     }
   }, [])
 
 
   return (
-    <Box sx={{ alignItems: "center", minWidth: 300, maxWidth: 350, pl: 2, pr: 2, display: 'flex', flexGrow: 1, flexDirection: 'column', alignContent: 'center' }}>
-      <div className='w-[96%] '>
+    <Box sx={{ height:'93vh', alignItems: "center", minWidth: 300, maxWidth: 400, pl: 2, pr: 2, display: 'flex', flexGrow: 1, flexDirection: 'column', alignContent: 'center' }}>
+      <div className='w-[96%] h-[22%]'>
         <Typography variant="h5" sx={{ textAlign: '', p: 1, color: "black" }}>Good {getCurrentTimeOfDay()} <b>{loggedName.split(' ')[0]}</b></Typography>
         <Stack spacing={1} sx={{ width: "100%" }}>
           <div className='upcomingBirthday h-24 w-full rounded-2xl text-black shadow-lg flex items-center justify-between'>
@@ -134,16 +133,17 @@ const Home: React.FC = () => {
               <div className='flex'>
                 <div className='flex items-center'>
                   <img src={personImg} className='w-12 h-12 rounded-full' />
-                  <span className='pl-2 w-36 flex-wrap'><b>{!!birthDayOrder.length ? birthDayOrder[0].Name : <span className='text-gray-900 blur-[3px]'>birthday boy</span>}</b></span></div>
+                  <span className='pl-2 w-36 flex-wrap'><b>{!!birthDayOrder.length ? birthDayOrder[0].Name : <Skeleton />}</b></span></div>
               </div>
             </div>
             <div className='flex flex-col mr-3 items-center'>
-              <span className=''><b>{!!birthDayOrder.length ? getBirthMonth() : <span className='text-gray-900 blur-[3px]'>02</span>}</b></span>
+              <span className=''><b>{!!birthDayOrder.length ? getBirthMonth(String(birthDayOrder[0].DateOfBirth)) : <span className='text-gray-900 blur-[3px]'>02</span>}</b></span>
               <span className='text-black text-xl'><b>{!!birthDayOrder.length ? birthDayOrder[0].DateOfBirth?.slice(8, 10) : <span className='text-gray-900 blur-[3px]'>Jan</span>}</b></span>
             </div>
           </div>
         </Stack>
       </div>
+      <div className='h-[calc(78%-68px)] overflow-y-scroll hideScrollbar'>
       <Box
         sx={{
           display: 'flex',
@@ -152,9 +152,8 @@ const Home: React.FC = () => {
           '& > :not(style)': {
             m: 1,
             mt: 2,
-            width: 150,
-            height: 150,
-
+            width: '44%',
+            aspectRatio:1/1,
           },
         }}
       >
@@ -172,6 +171,7 @@ const Home: React.FC = () => {
           ))
         }
       </Box>
+      </div>
     </Box>
   )
 }

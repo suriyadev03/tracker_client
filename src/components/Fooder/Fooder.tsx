@@ -21,7 +21,7 @@ export default function BottomNavigation() {
           bottom: 3,
           borderTopLeftRadius: '12px',
           borderTopRightRadius: '12px',
-          minWidth: 350, maxWidth: 350,
+          minWidth: 300, maxWidth: 400,width:'100%'
         }}
       >
         <Tabs
@@ -33,8 +33,8 @@ export default function BottomNavigation() {
           sx={(theme) => ({
             p: 1,
             borderRadius: 16,
-            maxWidth: 350,
-            mx: 'auto',
+            
+            mx: 2,
             backgroundColor:"#ffffdd",
             boxShadow: theme.shadow.sm,
             '--joy-shadowChannel': theme.vars.palette[colors[index]].darkChannel,

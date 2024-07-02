@@ -22,10 +22,10 @@ const Team: React.FC = () => {
       {
         !!userList.length ? <div className='scrollBar-regular-treat'>
         {
-          userList?.map((data) => (
-            <Card sx={{ mt: 1 }}>
+          userList?.map((data,i) => (
+            <Card sx={{ mt: 1 }} key={i}>
 
-              <CardContent sx={{ minWidth: 350, maxWidth: 390, display: "flex" }} className='pb-1'>
+              <CardContent sx={{ display: "flex" }} className='pb-1'>
                 <img src={profileLogo} className='w-16 h-16 rounded-full' />
                 <div className='pl-2 flex flex-col text-sm'>
                   <span>{data.Name}</span>
@@ -39,8 +39,8 @@ const Team: React.FC = () => {
         }
       </div> : <div className='scrollBar-regular-treat'>
         {
-          Array.from({ length: 10 }, (_,) => (
-            <Card sx={{ mt: 1 }}>
+          Array.from({ length: 10 }, (_,i) => (
+            <Card sx={{ mt: 1 }} key={i}>
 
               <CardContent sx={{ minWidth: 350, maxWidth: 390, display: "flex" }} className='pb-1'>
                 <img src={profileLogo} className='w-16 blur-[3px]' />

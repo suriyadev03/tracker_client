@@ -21,9 +21,19 @@ const setLocalStorageObject = (obj: tplotOptions) => {
     }
 };
 
+const getBirthMonth = (monthInDigit: string) => {
+    const month = String(monthInDigit.slice(5, 7))
+    const monthNumber = month.toString();
+    const date = new Date(0, Number(monthNumber) - 1);
+    const monthName = date.toLocaleString('default', { month: 'long' }).slice(0, 3);
+    return monthName
+
+  }
 
 export {
     getLocalStorage,
     setLocalStorage,
-    setLocalStorageObject
+    setLocalStorageObject,
+    getBirthMonth,
+
 };
