@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import Link, { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const PageNotFount = () => {
   const navigate = useNavigate()
